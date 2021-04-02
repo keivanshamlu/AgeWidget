@@ -6,6 +6,6 @@
     android:initialLayout="@layout/widget_exact_age"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen|keyguard"
-    android:configure="com.shamlou.agewidget.MainActivity"
+    android:configure="com.shamlou.agewidget.ui.MainActivity"
     android:previewImage="@drawable/ic_sim_card">
 </appwidget-provider>

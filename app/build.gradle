@@ -45,6 +45,9 @@ dependencies {
     //di
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //navigation
+    implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0-beta01'
     
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

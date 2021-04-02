@@ -1,11 +1,11 @@
-package com.shamlou.agewidget
+package com.shamlou.agewidget.widgets
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.os.SystemClock
-import android.util.Log
 import android.widget.RemoteViews
+import com.shamlou.agewidget.R
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
@@ -36,8 +36,8 @@ class WidgetExactAge : AppWidgetProvider() {
 
 
         remoteViews.setTextViewText(R.id.text_view_exact_age, "${p.years}:${p.months}:${p.days}")
-        remoteViews.setChronometerCountDown(R.id.chronometer_age , false)
-        remoteViews.setChronometer(R.id.chronometer_age ,SystemClock.elapsedRealtime() - currentClockTime , null , true)
+        remoteViews.setChronometerCountDown(R.id.chronometer_age, false)
+        remoteViews.setChronometer(R.id.chronometer_age,SystemClock.elapsedRealtime() - currentClockTime , null , true)
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
 
     }

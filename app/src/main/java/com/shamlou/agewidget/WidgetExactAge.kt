@@ -11,6 +11,7 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class WidgetExactAge : AppWidgetProvider() {
     override fun onUpdate(
@@ -28,12 +29,15 @@ class WidgetExactAge : AppWidgetProvider() {
         val birthday: LocalDate = LocalDate.parse("09-06-1998", formatter)
 
         val p: Period = Period.between(birthday, today)
-        val dateFormat  = SimpleDateFormat("HH:mm:ss")
-        val time = dateFormat.format(Date());
 
-        remoteViews.setTextViewText(R.id.text_view_exact_age, "${p.years}:${p.months}:${p.days}:$time")
+        val currentClockTime = TimeUnit.HOURS.toMillis(SimpleDateFormat("HH").format(Date()).toLong()) +
+                TimeUnit.MINUTES.toMillis(SimpleDateFormat("mm").format(Date()).toLong()) +
+                TimeUnit.SECONDS.toMillis(SimpleDateFormat("ss").format(Date()).toLong())
+
+
+        remoteViews.setTextViewText(R.id.text_view_exact_age, "${p.years}:${p.months}:${p.days}")
         remoteViews.setChronometerCountDown(R.id.chronometer_age , false)
-        remoteViews.setChronometer(R.id.chronometer_age ,SystemClock.elapsedRealtime()-22000 , null , true)
+        remoteViews.setChronometer(R.id.chronometer_age ,SystemClock.elapsedRealtime() - currentClockTime , null , true)
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
 
     }

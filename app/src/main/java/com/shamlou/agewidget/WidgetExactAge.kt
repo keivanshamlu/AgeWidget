@@ -3,18 +3,16 @@ package com.shamlou.agewidget
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.content.Intent
-import android.os.CountDownTimer
+import android.os.SystemClock
 import android.util.Log
 import android.widget.RemoteViews
-import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class SimpleWidgetProvider : AppWidgetProvider() {
+class WidgetExactAge : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -23,7 +21,7 @@ class SimpleWidgetProvider : AppWidgetProvider() {
 
         val remoteViews = RemoteViews(
             context.packageName,
-            R.layout.simple_widget
+            R.layout.widget_exact_age
         )
         val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
         val today: LocalDate = LocalDate.now()
@@ -34,7 +32,8 @@ class SimpleWidgetProvider : AppWidgetProvider() {
         val time = dateFormat.format(Date());
 
         remoteViews.setTextViewText(R.id.text_view_exact_age, "${p.years}:${p.months}:${p.days}:$time")
-
+        remoteViews.setChronometerCountDown(R.id.chronometer_age , false)
+        remoteViews.setChronometer(R.id.chronometer_age ,SystemClock.elapsedRealtime()-22000 , null , true)
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
 
     }

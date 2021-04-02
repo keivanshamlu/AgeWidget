@@ -29,7 +29,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/simple_widget_info" />
+                android:resource="@xml/widget_exact_age_info" />
         </receiver>
     </application>
 

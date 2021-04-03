@@ -20,7 +20,7 @@ object AnalyticsModule {
   ): RoomDatabase {
     return Room.databaseBuilder(
       applicationContext,
-      AppDatabase::class.java, "database-name"
+      AppDatabase::class.java, "birth-time-database"
     ).build()
   }
 }

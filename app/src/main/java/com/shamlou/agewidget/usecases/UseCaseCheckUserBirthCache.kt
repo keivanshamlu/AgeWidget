@@ -5,7 +5,7 @@ import androidx.lifecycle.Transformations
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.base.UseCaseBase
 import com.shamlou.agewidget.domain.UserBirthDomain
-import com.shamlou.agewidget.repository.RepositoryBirth
+import com.shamlou.agewidget.repository.birth.RepositoryBirth
 
 
 class UseCaseCheckUserBirthCache(private val repository: RepositoryBirth) : UseCaseBase<Unit, UserBirthDomain>() {

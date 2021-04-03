@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.shamlou.agewidget.db.AppDatabase
+import com.shamlou.agewidget.db.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,15 +13,22 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AnalyticsModule {
+object AppModule {
 
   @Provides
-  fun provideAnalyticsService(
+  fun provideAppDataBase(
     @ApplicationContext applicationContext: Context
-  ): RoomDatabase {
+  ): AppDatabase {
     return Room.databaseBuilder(
       applicationContext,
       AppDatabase::class.java, "birth-time-database"
     ).build()
+  }
+
+  @Provides
+  fun provideAppDataBaseUserDao(
+    dataBase : AppDatabase
+  ): UserDao {
+    return dataBase.userDao()
   }
 }

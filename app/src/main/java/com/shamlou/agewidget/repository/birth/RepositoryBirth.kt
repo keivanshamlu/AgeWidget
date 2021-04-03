@@ -1,4 +1,4 @@
-package com.shamlou.agewidget.repository
+package com.shamlou.agewidget.repository.birth
 
 import androidx.lifecycle.LiveData
 import com.shamlou.agewidget.base.BirthResource

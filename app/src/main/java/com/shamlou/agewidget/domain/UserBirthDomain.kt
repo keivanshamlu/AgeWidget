@@ -4,5 +4,6 @@ data class UserBirthDomain(
     val firstName: String,
     val birthDay: String,
     val birthMonth: String,
-    val birthYear: String
+    val birthYear: String,
+    val birthDateFormated: String
 )

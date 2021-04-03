@@ -6,9 +6,10 @@ import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.base.UseCaseBase
 import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.repository.birth.RepositoryBirth
+import javax.inject.Inject
 
 
-class UseCaseCheckUserBirthCache(private val repository: RepositoryBirth) : UseCaseBase<Unit, UserBirthDomain>() {
+class UseCaseCheckUserBirthCache @Inject constructor(private val repository: RepositoryBirth) : UseCaseBase<Unit, UserBirthDomain>() {
     override fun invoke(param: Unit): LiveData<BirthResource<UserBirthDomain>> {
         return Transformations.map(repository.getUserBirth()) {
             it // Place here your specific logic actions

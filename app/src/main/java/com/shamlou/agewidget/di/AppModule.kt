@@ -5,6 +5,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.shamlou.agewidget.db.AppDatabase
 import com.shamlou.agewidget.db.UserDao
+import com.shamlou.agewidget.repository.birth.RepositoryBirth
+import com.shamlou.agewidget.repository.birth.RepositoryBirthImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +32,12 @@ object AppModule {
     dataBase : AppDatabase
   ): UserDao {
     return dataBase.userDao()
+  }
+
+  @Provides
+  fun provideRepository(
+    dao: UserDao
+  ): RepositoryBirth {
+    return RepositoryBirthImpl(dao)
   }
 }

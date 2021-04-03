@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.shamlou.agewidget.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -20,14 +21,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setResult(RESULT_CANCELED);
-        val mAppWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+//        setResult(RESULT_CANCELED);
+//        val mAppWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+//
+//
+//        val resultValue = Intent()
+//        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
+//        setResult(Activity.RESULT_OK, resultValue)
+//        finish()
 
+        observeViewModel()
+    }
 
-        val resultValue = Intent()
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
-        setResult(Activity.RESULT_OK, resultValue)
-        finish()
+    private fun observeViewModel(){
 
+        viewModel.userBirthCache.observe(this , Observer {
+
+        })
     }
 }

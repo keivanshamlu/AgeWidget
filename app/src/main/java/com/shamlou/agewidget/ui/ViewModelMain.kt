@@ -58,4 +58,9 @@ class ViewModelMain
         Log.d("selected date" , "$year-$month-$dayOfMonthyear")
         _selectedBirthDate.value = BirthDomain(dayOfMonthyear.toString() , month.toString() , year.toString() , "$year-$month-$dayOfMonthyear")
     }
+
+    fun deleteSelectedDate(){
+
+        _selectedBirthDate.value = null
+    }
 }

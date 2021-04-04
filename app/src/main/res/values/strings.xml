@@ -5,4 +5,5 @@
     <string name="add_widget_help">On a Home screen, touch and hold an empty space.\nTap Widgets.\nTouch and hold a widget...</string>
     <string name="thats_my_birthdaay">thats my birthdaay!!!!! 😍</string>
     <string name="selected_date">selected date:</string>
+    <string name="oops_wrong_date">oops wrong date 😬</string>
 </resources>

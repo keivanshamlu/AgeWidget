@@ -84,6 +84,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="0"
             app:layout_constraintTop_toBottomOf="@+id/calendar_view"
             android:id="@+id/layout_not_registered_bottom_part"
             >
@@ -99,7 +100,6 @@
                 android:text="@string/selected_date"
                 android:textColor="@color/steel_700"
                 android:textSize="14dp"
-                android:visibility="@{viewModel.selectedBirthDate == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
@@ -114,7 +114,6 @@
                 android:text="@{viewModel.selectedBirthDate.birthDateFormated}"
                 android:textColor="@color/steel_700"
                 android:textSize="24dp"
-                android:visibility="@{viewModel.selectedBirthDate == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_clicked_date_desc" />
 
@@ -122,14 +121,24 @@
                 android:id="@+id/button_thats_my_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:backgroundTint="@color/buttons_colors"
                 android:text="@string/thats_my_birthdaay"
-                android:visibility="@{viewModel.selectedBirthDate == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@+id/text_view_clicked_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/text_view_clicked_date_desc" />
+
+            <Button
+                android:id="@+id/button_wrong_date"
+                android:text="@string/oops_wrong_date"
+                android:alpha="0"
+                android:backgroundTint="@color/buttons_colors"
+                android:layout_marginEnd="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/text_view_clicked_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_view_clicked_date_desc"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

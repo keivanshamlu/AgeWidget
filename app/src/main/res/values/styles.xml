@@ -1,21 +1,24 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/steel</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:typeface">serif</item>
     </style>
     <style name="helperTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/steel</item>
         <item name="android:gravity">start</item>
         <item name="android:textDirection">ltr</item>
     </style>
+
     <style name="TextAppearanceHint" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">center</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/steel</item>
-        <item name="android:fontFamily">@font/opensansbold</item>
+        <item name="android:fontFamily">@font/robotobold</item>
     </style>
 </resources>

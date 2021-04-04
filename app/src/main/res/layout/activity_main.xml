@@ -30,24 +30,11 @@
             android:textColor="#092FEC"
             android:textSize="36sp"
             android:format=""
-            app:layout_constraintBottom_toTopOf="@+id/btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="163dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="163dp"
-            android:text="start"
-            app:layout_constraintEnd_toEndOf="@id/c_meter"
-            app:layout_constraintHorizontal_bias="0.485"
-            app:layout_constraintStart_toEndOf="@+id/c_meter"
-            app:layout_constraintStart_toStartOf="@id/c_meter"
-            app:layout_constraintTop_toBottomOf="@+id/c_meter" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,6 +42,7 @@
             android:id="@+id/text_view_complete_age"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:text="Almost before we knew it, we had left the ground."
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

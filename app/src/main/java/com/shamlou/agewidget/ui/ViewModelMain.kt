@@ -27,6 +27,9 @@ class ViewModelMain
     private val _selectedBirthDate = MutableLiveData<BirthDomain?>()
     val selectedBirthDate: LiveData<BirthDomain?> = _selectedBirthDate
 
+    private val _notRegisteredStates = MutableLiveData<NotRegisteredStates>().apply { value = NotRegisteredStates.DATE_NOT_SELECTED }
+    val notRegisteredStates: LiveData<NotRegisteredStates> = _notRegisteredStates
+
     init {
 
         //check user birth at first
@@ -57,10 +60,24 @@ class ViewModelMain
 
         Log.d("selected date" , "$year-$month-$dayOfMonthyear")
         _selectedBirthDate.value = BirthDomain(dayOfMonthyear.toString() , month.toString() , year.toString() , "$year-$month-$dayOfMonthyear")
+        _notRegisteredStates.value = NotRegisteredStates.DATE_SELECTED
     }
 
     fun deleteSelectedDate(){
 
         _selectedBirthDate.value = null
+        _notRegisteredStates.value = NotRegisteredStates.DATE_NOT_SELECTED
     }
+
+    fun dateConfirmed(){
+
+        _notRegisteredStates.value = NotRegisteredStates.DATE_CONFIRMED
+    }
+}
+
+enum class NotRegisteredStates{
+    DATE_NOT_SELECTED,
+    DATE_SELECTED,
+    DATE_CONFIRMED,
+    NAME_VALIDATED
 }

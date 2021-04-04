@@ -25,44 +25,14 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-//        setResult(RESULT_CANCELED);
         viewModel.setAppWidgetId(
             intent.extras?.getInt(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID
             )
         )
-        button_thats_my_birthday.setOnClickListener {
 
-            calendar_view.animate()
-                .translationY(-calendar_view.height.toFloat())
-                .alpha(0.0f).duration = 600
-            button_thats_my_birthday.animate()
-                .alpha(0.0f).duration = 600
-            button_wrong_date.animate()
-                .alpha(1f).duration = 600
-            layout_not_registered_bottom_part.animate()
-                .translationY(-calendar_view.height.toFloat())
-                .duration = 600
-
-        }
-        button_wrong_date.setOnClickListener {
-
-            viewModel.deleteSelectedDate()
-
-            calendar_view.animate()
-                .translationY(0f)
-                .alpha(1f).duration = 600
-            button_thats_my_birthday.animate()
-                .alpha(1f).duration = 600
-            button_wrong_date.animate()
-                .alpha(0.0f).duration = 600
-            layout_not_registered_bottom_part.animate()
-                .translationY(0f)
-                .duration = 600
-        }
-//
-//
+//        setResult(RESULT_CANCELED);
 //        val resultValue = Intent()
 //        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
 //        setResult(Activity.RESULT_OK, resultValue)
@@ -89,6 +59,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.selectedBirthDate.observe(this, Observer {
 
             showNotRegisteredBottomPart(it != null)
+        })
+        viewModel.notRegisteredStates.observe(this, Observer {
+
         })
     }
 

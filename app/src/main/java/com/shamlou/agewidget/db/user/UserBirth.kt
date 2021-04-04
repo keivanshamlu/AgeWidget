@@ -1,4 +1,4 @@
-package com.shamlou.agewidget.db.entities
+package com.shamlou.agewidget.db.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

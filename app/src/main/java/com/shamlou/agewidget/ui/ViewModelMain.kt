@@ -37,6 +37,12 @@ class ViewModelMain
         userBirthCacheSource = useCaseCheckUserBirthCache(Unit)
         _userBirthCache.addSource(userBirthCacheSource) { birthSource ->
             _userBirthCache.value = birthSource
+
+            when(birthSource.status){
+                BirthResource.Status.REGISTERED -> {}
+                BirthResource.Status.NOT_REGISTERED -> {}
+                BirthResource.Status.LOADING -> {}
+            }
         }
     }
 }

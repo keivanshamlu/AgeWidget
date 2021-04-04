@@ -3,8 +3,8 @@ package com.shamlou.agewidget.repository.birth
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.shamlou.agewidget.base.BirthResource
-import com.shamlou.agewidget.db.UserDao
-import com.shamlou.agewidget.db.entities.toDomain
+import com.shamlou.agewidget.db.user.UserDao
+import com.shamlou.agewidget.db.user.toDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
 import javax.inject.Inject
 

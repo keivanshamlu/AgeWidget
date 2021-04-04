@@ -2,9 +2,8 @@ package com.shamlou.agewidget.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.shamlou.agewidget.db.AppDatabase
-import com.shamlou.agewidget.db.UserDao
+import com.shamlou.agewidget.db.user.UserDao
 import com.shamlou.agewidget.repository.birth.RepositoryBirth
 import com.shamlou.agewidget.repository.birth.RepositoryBirthImpl
 import dagger.Module

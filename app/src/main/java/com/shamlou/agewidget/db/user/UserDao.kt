@@ -1,7 +1,7 @@
-package com.shamlou.agewidget.db
+package com.shamlou.agewidget.db.user
 
 import androidx.room.*
-import com.shamlou.agewidget.db.entities.UserBirth
+import com.shamlou.agewidget.db.user.UserBirth
 
 @Dao
 interface UserDao {

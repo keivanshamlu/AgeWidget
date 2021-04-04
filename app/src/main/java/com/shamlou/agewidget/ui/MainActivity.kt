@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 //        setResult(Activity.RESULT_OK, resultValue)
 //        finish()
 
+
         observeViewModel()
     }
 

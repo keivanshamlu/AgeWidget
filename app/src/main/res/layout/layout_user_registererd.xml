@@ -161,9 +161,10 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <Button
+                android:onClick="@{() -> viewModel.letsGoButtonClicked()}"
                 app:letsGoViewAnimations="@{viewModel.notRegisteredStates}"
                 android:id="@+id/lets_go"
-                android:text="let's go baby 😎"
+                android:text="@string/let_s_go_baby"
                 android:backgroundTint="@color/buttons_colors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

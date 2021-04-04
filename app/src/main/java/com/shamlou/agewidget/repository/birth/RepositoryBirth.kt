@@ -7,4 +7,5 @@ import com.shamlou.agewidget.domain.UserBirthDomain
 interface RepositoryBirth {
 
     fun getUserBirth(): LiveData<BirthResource<UserBirthDomain>>
+    fun setUserBirth(userBirthDomain: UserBirthDomain): LiveData<BirthResource<Unit>>
 }

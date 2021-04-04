@@ -1,10 +1,7 @@
 package com.shamlou.agewidget.ui
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.base.Event
 import com.shamlou.agewidget.domain.BirthDomain
@@ -30,10 +27,26 @@ class ViewModelMain
     private val _notRegisteredStates = MutableLiveData<NotRegisteredStates>().apply { value = NotRegisteredStates.DATE_NOT_SELECTED }
     val notRegisteredStates: LiveData<NotRegisteredStates> = _notRegisteredStates
 
+    var enteredName: MutableLiveData<String> = MediatorLiveData()
+
+    val nameIsValid : LiveData<Boolean> = Transformations.map(enteredName){
+
+        val nameIsValied = it.length >= 3
+        handleNameChanged(nameIsValied)
+        nameIsValied
+    }
+
     init {
 
         //check user birth at first
         checkUserBirthCache()
+    }
+
+    private fun handleNameChanged(isValidNow : Boolean){
+
+        if(isValidNow) _notRegisteredStates.value =  NotRegisteredStates.NAME_VALIDATED
+        else if (_notRegisteredStates.value == NotRegisteredStates.NAME_VALIDATED)
+            _notRegisteredStates.value =  NotRegisteredStates.DATE_CONFIRMED
     }
 
     private fun checkUserBirthCache(){
@@ -71,7 +84,7 @@ class ViewModelMain
 
     fun dateConfirmed(){
 
-        _notRegisteredStates.value = NotRegisteredStates.DATE_CONFIRMED
+        _notRegisteredStates.value = if(nameIsValid.value == true) NotRegisteredStates.NAME_VALIDATED else NotRegisteredStates.DATE_CONFIRMED
     }
 }
 

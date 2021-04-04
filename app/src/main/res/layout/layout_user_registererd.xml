@@ -59,33 +59,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_not_registered_desc" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_enter_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="24dp"
-            android:autofillHints="please enter your beautiful name"
-            android:fontFamily="@font/robotobold"
-            android:gravity="start"
-            android:inputType="text"
-            android:maxLength="10"
-            android:maxLines="1"
-            android:paddingStart="15dp"
-            android:textAlignment="viewStart"
-            android:textColor="@color/steel_700"
-            android:textDirection="rtl"
-            android:textSize="13sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendar_view" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0"
+            tool:alpha="1"
             app:dateLayoutViewAnimations="@{viewModel.notRegisteredStates}"
             app:layout_constraintTop_toBottomOf="@+id/calendar_view"
             android:id="@+id/layout_not_registered_bottom_part"
@@ -145,6 +123,58 @@
                 app:layout_constraintBottom_toBottomOf="@+id/text_view_clicked_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/text_view_clicked_date_desc"/>
+
+            <TextView
+                android:id="@+id/text_view_enter_your_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="@string/please_enter_your_beautiful_name_here"
+                android:textColor="@color/steel_700"
+                android:textSize="14dp"
+                app:enterNameViewAnimations="@{viewModel.notRegisteredStates}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_clicked_date"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_enter_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:fontFamily="@font/robotobold"
+                android:inputType="text"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:layout_marginEnd="10dp"
+                android:text="@={viewModel.enteredName}"
+                app:enterNameViewAnimations="@{viewModel.notRegisteredStates}"
+                android:paddingStart="15dp"
+                android:hint="your name here"
+                android:textAlignment="viewStart"
+                android:textColor="@color/steel_700"
+                android:textDirection="rtl"
+                android:textSize="18dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_enter_your_name"
+                app:layout_constraintEnd_toStartOf="@+id/lets_go"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                app:letsGoViewAnimations="@{viewModel.notRegisteredStates}"
+                android:id="@+id/lets_go"
+                android:text="let's go baby 😎"
+                android:backgroundTint="@color/buttons_colors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintTop_toTopOf="@+id/edit_text_enter_name"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_text_enter_name"
+                app:layout_constraintStart_toEndOf="@+id/edit_text_enter_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

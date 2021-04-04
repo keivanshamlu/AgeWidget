@@ -2,6 +2,7 @@ package com.shamlou.agewidget.ui.bindingAdapters
 
 import android.animation.Animator
 import android.content.res.Resources
+import android.os.Handler
 import android.view.View
 import androidx.databinding.BindingAdapter
 import com.shamlou.agewidget.ANIMS_DURATION
@@ -42,6 +43,17 @@ fun calenderViewAnimations(view: View, animState : NotRegisteredStates?) {
     view.animate()
         .translationY(transitionY)
         .alpha(alpha)
+        .setListener(object : Animator.AnimatorListener{
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationEnd(p0: Animator?) {
+
+                view.visibility = if(alpha == 0f) View.INVISIBLE else View.VISIBLE
+            }
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationStart(p0: Animator?) {
+                if(alpha == 1f)view.visibility = View.VISIBLE
+            }
+        })
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("app:dateLayoutViewAnimations")
@@ -80,7 +92,7 @@ fun dateLayoutViewAnimations(view: View, animState : NotRegisteredStates?) {
             }
             override fun onAnimationCancel(p0: Animator?) {}
             override fun onAnimationStart(p0: Animator?) {
-                view.visibility = View.VISIBLE
+                if(alpha == 1f)view.visibility = View.VISIBLE
             }
         })
         .duration = ANIMS_DURATION
@@ -115,13 +127,59 @@ fun confirmDateViewAnimations(view: View, animState : NotRegisteredStates?) {
             }
             override fun onAnimationCancel(p0: Animator?) {}
             override fun onAnimationStart(p0: Animator?) {
-                view.visibility = View.VISIBLE
+                if(alpha == 1f)view.visibility = View.VISIBLE
             }
         })
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("app:wrongDateButtonViewAnimations")
 fun wrongDateViewAnimations(view: View, animState : NotRegisteredStates?) {
+
+    var transitionY = 0f
+    var alpha = 0f
+
+    animState?.let { state ->
+        when(state){
+            NotRegisteredStates.DATE_NOT_SELECTED -> {
+                alpha = 0f
+                transitionY = -view.height.toFloat()
+            }
+            NotRegisteredStates.DATE_SELECTED -> {
+                alpha = 0f
+                transitionY = -view.height.toFloat()
+            }
+            NotRegisteredStates.DATE_CONFIRMED -> {
+                alpha = 1f
+                transitionY = -view.height.toFloat()
+            }
+            NotRegisteredStates.NAME_VALIDATED -> {
+                alpha = 1f
+                transitionY = -view.height.toFloat()
+            }
+        }
+    }
+
+    Handler().postDelayed({
+
+        view.animate()
+            .alpha(alpha)
+            .setListener(object : Animator.AnimatorListener{
+                override fun onAnimationRepeat(p0: Animator?) {}
+                override fun onAnimationEnd(p0: Animator?) {
+
+                    view.visibility = if(alpha == 0f) View.GONE else View.VISIBLE
+                }
+                override fun onAnimationCancel(p0: Animator?) {}
+                override fun onAnimationStart(p0: Animator?) {
+                    if(alpha == 1f)view.visibility = View.VISIBLE
+                }
+            })
+            .duration = ANIMS_DURATION
+    } , ANIMS_DURATION)
+
+}
+@BindingAdapter("enterNameViewAnimations")
+fun enterNameViewAnimations(view: View, animState : NotRegisteredStates?) {
 
     var alpha = 0f
     animState?.let { state ->
@@ -150,7 +208,42 @@ fun wrongDateViewAnimations(view: View, animState : NotRegisteredStates?) {
             }
             override fun onAnimationCancel(p0: Animator?) {}
             override fun onAnimationStart(p0: Animator?) {
-                view.visibility = View.VISIBLE
+                if(alpha == 1f)view.visibility = View.VISIBLE
+            }
+        })
+        .duration = ANIMS_DURATION
+}
+@BindingAdapter("letsGoViewAnimations")
+fun letsGoViewAnimations(view: View, animState : NotRegisteredStates?) {
+
+    var alpha = 0f
+    animState?.let { state ->
+        when(state){
+            NotRegisteredStates.DATE_NOT_SELECTED -> {
+                alpha = 0f
+            }
+            NotRegisteredStates.DATE_SELECTED -> {
+                alpha = 0f
+            }
+            NotRegisteredStates.DATE_CONFIRMED -> {
+                alpha = 0f
+            }
+            NotRegisteredStates.NAME_VALIDATED -> {
+                alpha = 1f
+            }
+        }
+    }
+    view.animate()
+        .alpha(alpha)
+        .setListener(object : Animator.AnimatorListener{
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationEnd(p0: Animator?) {
+
+                view.visibility = if(alpha == 0f) View.INVISIBLE else View.VISIBLE
+            }
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationStart(p0: Animator?) {
+                if(alpha == 1f)view.visibility = View.VISIBLE
             }
         })
         .duration = ANIMS_DURATION

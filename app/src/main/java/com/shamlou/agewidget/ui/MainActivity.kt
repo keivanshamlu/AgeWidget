@@ -58,17 +58,9 @@ class MainActivity : AppCompatActivity() {
         })
         viewModel.selectedBirthDate.observe(this, Observer {
 
-            showNotRegisteredBottomPart(it != null)
         })
-        viewModel.notRegisteredStates.observe(this, Observer {
-
-        })
+        viewModel.notRegisteredStates.observe(this, Observer {})
+        viewModel.nameIsValid.observe(this, Observer {})
     }
 
-    private fun showNotRegisteredBottomPart(show: Boolean) {
-
-        layout_not_registered_bottom_part.animate()
-            .alpha(if (show) 1f else 0.0f)
-            .duration = 600
-    }
 }

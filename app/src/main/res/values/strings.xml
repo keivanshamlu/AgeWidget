@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Age widget</string>
+    <string name="welcome_text">welcome to age widget</string>
+    <string name="not_registered_desc">please insert your birthday so we can calculate your exact age</string>
+    <string name="add_widget_help">On a Home screen, touch and hold an empty space.\nTap Widgets.\nTouch and hold a widget...</string>
 </resources>

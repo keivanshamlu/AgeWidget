@@ -1,6 +1,8 @@
 package com.shamlou.agewidget.ui
 
+import android.appwidget.AppWidgetManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -21,7 +23,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
 //        setResult(RESULT_CANCELED);
-//        val mAppWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        viewModel.setAppWidgetId(intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID))
+
 //
 //
 //        val resultValue = Intent()

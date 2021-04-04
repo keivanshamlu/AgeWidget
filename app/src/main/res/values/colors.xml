@@ -3,5 +3,13 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorRed">#9D0035</color>
+    <color name="colorBlue">#2196F3</color>
     <color name="steel">#AEAFB0</color>
+    <color name="background_colors">#FAFAFA</color>
+    <color name="steel_100">#f5f8fa</color>
+    <color name="steel_200">#dee3e7</color>
+    <color name="steel_300">#afb9c5</color>
+    <color name="steel_500">#778599</color>
+    <color name="steel_700">#475466</color>
 </resources>

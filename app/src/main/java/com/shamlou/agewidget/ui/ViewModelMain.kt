@@ -25,6 +25,9 @@ class ViewModelMain
     private val _userNotRegistered = MutableLiveData<Event<Unit>>()
     val userNotRegistered: LiveData<Event<Unit>> = _userNotRegistered
 
+    private val _appWidgetId = MutableLiveData<Int?>()
+    val appWidgetId: LiveData<Int?> = _appWidgetId
+
     init {
 
         //check user birth at first
@@ -44,5 +47,10 @@ class ViewModelMain
                 BirthResource.Status.LOADING -> {}
             }
         }
+    }
+
+    fun setAppWidgetId(appWidgetId : Int?){
+
+        _appWidgetId.value = appWidgetId
     }
 }

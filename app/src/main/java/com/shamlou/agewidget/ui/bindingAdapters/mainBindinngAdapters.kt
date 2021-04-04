@@ -1,11 +1,11 @@
 package com.shamlou.agewidget.ui.bindingAdapters
 
+import android.animation.Animator
 import android.content.res.Resources
 import android.view.View
 import androidx.databinding.BindingAdapter
 import com.shamlou.agewidget.ANIMS_DURATION
 import com.shamlou.agewidget.ui.NotRegisteredStates
-import kotlinx.android.synthetic.main.layout_user_registererd.*
 
 internal val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
@@ -15,7 +15,7 @@ fun goneUnless(view: View, visible: Boolean) {
 }
 
 @BindingAdapter("app:calenderViewAnimations")
-fun calenderViewAnimations(calendar_view: View, animState : NotRegisteredStates?) {
+fun calenderViewAnimations(view: View, animState : NotRegisteredStates?) {
 
     var transitionY = 0f
     var alpha = 0f
@@ -30,22 +30,22 @@ fun calenderViewAnimations(calendar_view: View, animState : NotRegisteredStates?
                 alpha = 1f
             }
             NotRegisteredStates.DATE_CONFIRMED -> {
-                transitionY = -calendar_view.height.toFloat()
+                transitionY = -view.height.toFloat()
                 alpha = 0f
             }
             NotRegisteredStates.NAME_VALIDATED -> {
-                transitionY = -calendar_view.height.toFloat()
+                transitionY = -view.height.toFloat()
                 alpha = 0f
             }
         }
     }
-    calendar_view.animate()
+    view.animate()
         .translationY(transitionY)
         .alpha(alpha)
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("app:dateLayoutViewAnimations")
-fun dateLayoutViewAnimations(dateLayout: View, animState : NotRegisteredStates?) {
+fun dateLayoutViewAnimations(view: View, animState : NotRegisteredStates?) {
 
     var transitionY = 0f
     var alpha = 0f
@@ -69,13 +69,24 @@ fun dateLayoutViewAnimations(dateLayout: View, animState : NotRegisteredStates?)
             }
         }
     }
-    dateLayout.animate()
+    view.animate()
         .translationY(transitionY)
         .alpha(alpha)
+        .setListener(object : Animator.AnimatorListener{
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationEnd(p0: Animator?) {
+
+                view.visibility = if(alpha == 0f) View.GONE else View.VISIBLE
+            }
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationStart(p0: Animator?) {
+                view.visibility = View.VISIBLE
+            }
+        })
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("app:confirmDateViewAnimations")
-fun confirmDateViewAnimations(confirmDate: View, animState : NotRegisteredStates?) {
+fun confirmDateViewAnimations(view: View, animState : NotRegisteredStates?) {
 
     var alpha = 0f
     animState?.let { state ->
@@ -94,12 +105,23 @@ fun confirmDateViewAnimations(confirmDate: View, animState : NotRegisteredStates
             }
         }
     }
-    confirmDate.animate()
+    view.animate()
         .alpha(alpha)
+        .setListener(object : Animator.AnimatorListener{
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationEnd(p0: Animator?) {
+
+                view.visibility = if(alpha == 0f) View.GONE else View.VISIBLE
+            }
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationStart(p0: Animator?) {
+                view.visibility = View.VISIBLE
+            }
+        })
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("app:wrongDateButtonViewAnimations")
-fun wrongDateViewAnimations(wrongDate: View, animState : NotRegisteredStates?) {
+fun wrongDateViewAnimations(view: View, animState : NotRegisteredStates?) {
 
     var alpha = 0f
     animState?.let { state ->
@@ -118,7 +140,18 @@ fun wrongDateViewAnimations(wrongDate: View, animState : NotRegisteredStates?) {
             }
         }
     }
-    wrongDate.animate()
+    view.animate()
         .alpha(alpha)
+        .setListener(object : Animator.AnimatorListener{
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationEnd(p0: Animator?) {
+
+                view.visibility = if(alpha == 0f) View.GONE else View.VISIBLE
+            }
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationStart(p0: Animator?) {
+                view.visibility = View.VISIBLE
+            }
+        })
         .duration = ANIMS_DURATION
 }

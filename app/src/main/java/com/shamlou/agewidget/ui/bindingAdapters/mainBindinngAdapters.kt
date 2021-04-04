@@ -6,6 +6,8 @@ import android.os.Handler
 import android.view.View
 import androidx.databinding.BindingAdapter
 import com.shamlou.agewidget.ANIMS_DURATION
+import com.shamlou.agewidget.base.closeSoftKeyboard
+import com.shamlou.agewidget.base.showKeyboard
 import com.shamlou.agewidget.ui.NotRegisteredStates
 
 internal val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
@@ -186,9 +188,11 @@ fun enterNameViewAnimations(view: View, animState : NotRegisteredStates?) {
         when(state){
             NotRegisteredStates.DATE_NOT_SELECTED -> {
                 alpha = 0f
+                view.closeSoftKeyboard()
             }
             NotRegisteredStates.DATE_SELECTED -> {
                 alpha = 0f
+                view.closeSoftKeyboard()
             }
             NotRegisteredStates.DATE_CONFIRMED -> {
                 alpha = 1f

@@ -3,6 +3,7 @@ package com.shamlou.agewidget.db.user
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.shamlou.agewidget.domain.BirthDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
 
 @Entity
@@ -18,9 +19,11 @@ data class UserBirth(
 fun UserBirth.toDomain(): UserBirthDomain = this.let {
     UserBirthDomain(
         firstName ?: "",
-        birthDay ?: "",
-        birthMonth ?: "",
-        birthYear ?: "",
-        birthDateFormated ?: ""
+        BirthDomain(
+            birthDay ?: "",
+            birthMonth ?: "",
+            birthYear ?: "",
+            birthDateFormated ?: ""
+        )
     )
 }

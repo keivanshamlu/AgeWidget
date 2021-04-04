@@ -22,4 +22,12 @@
         <item name="android:textColor">@color/steel</item>
         <item name="android:fontFamily">@font/robotobold</item>
     </style>
+
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/steel_500</item>
+    </style>
+
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/steel_500</item>
+    </style>
 </resources>

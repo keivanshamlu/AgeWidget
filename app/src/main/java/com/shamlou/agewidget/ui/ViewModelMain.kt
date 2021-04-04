@@ -1,11 +1,13 @@
 package com.shamlou.agewidget.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.base.Event
+import com.shamlou.agewidget.domain.BirthDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.usecases.UseCaseCheckUserBirthCache
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,14 +21,11 @@ class ViewModelMain
     private val _userBirthCache = MediatorLiveData<BirthResource<UserBirthDomain>>()
     val userBirthCache: LiveData<BirthResource<UserBirthDomain>> get() = _userBirthCache
 
-    private val _userRegistered = MutableLiveData<Event<UserBirthDomain>>()
-    val userRegistered: LiveData<Event<UserBirthDomain>> = _userRegistered
-
-    private val _userNotRegistered = MutableLiveData<Event<Unit>>()
-    val userNotRegistered: LiveData<Event<Unit>> = _userNotRegistered
-
     private val _appWidgetId = MutableLiveData<Int?>()
     val appWidgetId: LiveData<Int?> = _appWidgetId
+
+    private val _selectedBirthDate = MutableLiveData<BirthDomain?>()
+    val selectedBirthDate: LiveData<BirthDomain?> = _selectedBirthDate
 
     init {
 
@@ -52,5 +51,11 @@ class ViewModelMain
     fun setAppWidgetId(appWidgetId : Int?){
 
         _appWidgetId.value = appWidgetId
+    }
+
+    fun setSelectedDateButWeAreNotSure(year : Int, month : Int, dayOfMonthyear : Int){
+
+        Log.d("selected date" , "$year:$month:$dayOfMonthyear")
+        _selectedBirthDate.value = BirthDomain(dayOfMonthyear.toString() , month.toString() , year.toString() , "$year:$month:$dayOfMonthyear")
     }
 }

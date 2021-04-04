@@ -3,4 +3,6 @@
     <string name="welcome_text">welcome to age widget</string>
     <string name="not_registered_desc">please insert your birthday so we can calculate your exact age</string>
     <string name="add_widget_help">On a Home screen, touch and hold an empty space.\nTap Widgets.\nTouch and hold a widget...</string>
+    <string name="thats_my_birthdaay">thats my birthdaay!!!!! 😍</string>
+    <string name="selected_date">selected date:</string>
 </resources>

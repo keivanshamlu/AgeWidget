@@ -21,12 +21,25 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         val view = binding.root
         setContentView(view)
 
 //        setResult(RESULT_CANCELED);
         viewModel.setAppWidgetId(intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID))
+        button_thats_my_birthday.setOnClickListener {
 
+            calendar_view.animate()
+                .translationY(-calendar_view.height.toFloat())
+                .alpha(0.0f).duration = 600
+            button_thats_my_birthday.animate()
+                .alpha(0.0f).duration = 600
+            layout_not_registered_bottom_part.animate()
+                .translationY(-calendar_view.height.toFloat())
+                .duration = 600
+
+        }
 //
 //
 //        val resultValue = Intent()
@@ -50,9 +63,6 @@ class MainActivity : AppCompatActivity() {
     private fun observeViewModel(){
 
         viewModel.userBirthCache.observe(this , Observer {
-
-        })
-        viewModel.offerGetName.observe(this , Observer {
 
         })
     }

@@ -76,6 +76,9 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
 
+    //emoji
+    implementation "androidx.emoji:emoji-appcompat:1.2.0-alpha03"
+
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 

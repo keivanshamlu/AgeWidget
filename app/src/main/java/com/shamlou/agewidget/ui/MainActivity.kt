@@ -2,13 +2,17 @@ package com.shamlou.agewidget.ui
 
 import android.appwidget.AppWidgetManager
 import android.os.Bundle
+import android.os.SystemClock
+import android.widget.Chronometer.OnChronometerTickListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.shamlou.agewidget.base.closeSoftKeyboard
 import com.shamlou.agewidget.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_user_not_registererd.*
+import kotlinx.android.synthetic.main.layout_user_registered.*
 import java.util.*
 
 
@@ -48,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         calendar_view.date = GregorianCalendar(1998, 5, 9).timeInMillis
         calendar_view.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
 
-            viewModel.setSelectedDateButWeAreNotSure(year, month+1, dayOfMonth)
+            viewModel.setSelectedDateButWeAreNotSure(year, month + 1, dayOfMonth)
         }
     }
 
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.registeredUser.observe(this, Observer {})
         viewModel.calculatedAge.observe(this, Observer {
 
-
+            it?.let { setChronometer(it.second) }
         })
         viewModel.checkState.observe(this, Observer {
 
@@ -73,8 +77,24 @@ class MainActivity : AppCompatActivity() {
         })
         viewModel.closeKeyBoard.observe(this, Observer {
 
-            if(it.getContentIfNotHandled() == true) binding.root.closeSoftKeyboard()
+            if (it.getContentIfNotHandled() == true) binding.root.closeSoftKeyboard()
         })
+    }
+
+    private fun setChronometer(base : Long) {
+
+        chronometer_age.onChronometerTickListener =
+            OnChronometerTickListener { cArg ->
+                val time = SystemClock.elapsedRealtime() - cArg.base
+                val h = (time / 3600000).toInt()
+                val m = (time - h * 3600000).toInt() / 60000
+                val s = (time - h * 3600000 - m * 60000).toInt() / 1000
+                text_view_age_hour.text = if (h < 10) "0$h" else h.toString() + ""
+                text_view_age_minutes.text = if (m < 10) "0$m" else m.toString() + ""
+                text_view_age_seconds.text = if (s < 10) "0$s" else s.toString() + ""
+            }
+        chronometer_age.base = base
+        chronometer_age.start()
     }
 
 }

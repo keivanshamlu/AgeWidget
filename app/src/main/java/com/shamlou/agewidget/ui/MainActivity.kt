@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.shamlou.agewidget.base.closeSoftKeyboard
 import com.shamlou.agewidget.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_user_registererd.*
@@ -59,8 +60,13 @@ class MainActivity : AppCompatActivity() {
         viewModel.selectedBirthDate.observe(this, Observer {
 
         })
-        viewModel.notRegisteredStates.observe(this, Observer {})
+        viewModel.mainPageStates.observe(this, Observer {})
         viewModel.nameIsValid.observe(this, Observer {})
+        viewModel.registeredUser.observe(this, Observer {})
+        viewModel.closeKeyBoard.observe(this, Observer {
+
+            if(it.getContentIfNotHandled() == true) binding.root.closeSoftKeyboard()
+        })
     }
 
 }

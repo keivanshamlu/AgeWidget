@@ -7,8 +7,7 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import com.shamlou.agewidget.ANIMS_DURATION
 import com.shamlou.agewidget.base.closeSoftKeyboard
-import com.shamlou.agewidget.base.showKeyboard
-import com.shamlou.agewidget.ui.NotRegisteredStates
+import com.shamlou.agewidget.ui.MainPageStates
 
 internal val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
@@ -18,25 +17,29 @@ fun goneUnless(view: View, visible: Boolean) {
 }
 
 @BindingAdapter("app:calenderViewAnimations")
-fun calenderViewAnimations(view: View, animState : NotRegisteredStates?) {
+fun calenderViewAnimations(view: View, animState : MainPageStates?) {
 
     var transitionY = 0f
     var alpha = 0f
     animState?.let { state ->
         when(state){
-            NotRegisteredStates.DATE_NOT_SELECTED -> {
+            MainPageStates.DATE_NOT_SELECTED -> {
                 transitionY = 0f
                 alpha = 1f
             }
-            NotRegisteredStates.DATE_SELECTED -> {
+            MainPageStates.DATE_SELECTED -> {
                 transitionY = 0f
                 alpha = 1f
             }
-            NotRegisteredStates.DATE_CONFIRMED -> {
+            MainPageStates.DATE_CONFIRMED -> {
                 transitionY = -view.height.toFloat()
                 alpha = 0f
             }
-            NotRegisteredStates.NAME_VALIDATED -> {
+            MainPageStates.NAME_VALIDATED -> {
+                transitionY = -view.height.toFloat()
+                alpha = 0f
+            }
+            MainPageStates.REGISTERED -> {
                 transitionY = -view.height.toFloat()
                 alpha = 0f
             }
@@ -59,27 +62,31 @@ fun calenderViewAnimations(view: View, animState : NotRegisteredStates?) {
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("app:dateLayoutViewAnimations")
-fun dateLayoutViewAnimations(view: View, animState : NotRegisteredStates?) {
+fun dateLayoutViewAnimations(view: View, animState : MainPageStates?) {
 
     var transitionY = 0f
     var alpha = 0f
     animState?.let { state ->
         when(state){
-            NotRegisteredStates.DATE_NOT_SELECTED -> {
+            MainPageStates.DATE_NOT_SELECTED -> {
                 transitionY = 0f
                 alpha = 0f
             }
-            NotRegisteredStates.DATE_SELECTED -> {
+            MainPageStates.DATE_SELECTED -> {
                 transitionY = 0f
                 alpha = 1f
             }
-            NotRegisteredStates.DATE_CONFIRMED -> {
+            MainPageStates.DATE_CONFIRMED -> {
                 transitionY = -300.dp.toFloat()
                 alpha = 1f
             }
-            NotRegisteredStates.NAME_VALIDATED -> {
+            MainPageStates.NAME_VALIDATED -> {
                 transitionY = -300.dp.toFloat()
                 alpha = 1f
+            }
+            MainPageStates.REGISTERED -> {
+                transitionY = -300.dp.toFloat()
+                alpha = 0f
             }
         }
     }
@@ -100,22 +107,25 @@ fun dateLayoutViewAnimations(view: View, animState : NotRegisteredStates?) {
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("app:confirmDateViewAnimations")
-fun confirmDateViewAnimations(view: View, animState : NotRegisteredStates?) {
+fun confirmDateViewAnimations(view: View, animState : MainPageStates?) {
 
     var alpha = 0f
     animState?.let { state ->
         when(state){
-            NotRegisteredStates.DATE_NOT_SELECTED -> {
+            MainPageStates.DATE_NOT_SELECTED -> {
                 alpha = 1f
             }
-            NotRegisteredStates.DATE_SELECTED -> {
+            MainPageStates.DATE_SELECTED -> {
                 alpha = 1f
             }
-            NotRegisteredStates.DATE_CONFIRMED -> {
+            MainPageStates.DATE_CONFIRMED -> {
                 alpha = 0f
             }
-            NotRegisteredStates.NAME_VALIDATED -> {
+            MainPageStates.NAME_VALIDATED -> {
                 alpha = 0f
+            }
+            MainPageStates.REGISTERED -> {
+                alpha = 1f
             }
         }
     }
@@ -135,28 +145,26 @@ fun confirmDateViewAnimations(view: View, animState : NotRegisteredStates?) {
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("app:wrongDateButtonViewAnimations")
-fun wrongDateViewAnimations(view: View, animState : NotRegisteredStates?) {
+fun wrongDateViewAnimations(view: View, animState : MainPageStates?) {
 
-    var transitionY = 0f
     var alpha = 0f
 
     animState?.let { state ->
         when(state){
-            NotRegisteredStates.DATE_NOT_SELECTED -> {
+            MainPageStates.DATE_NOT_SELECTED -> {
                 alpha = 0f
-                transitionY = -view.height.toFloat()
             }
-            NotRegisteredStates.DATE_SELECTED -> {
+            MainPageStates.DATE_SELECTED -> {
                 alpha = 0f
-                transitionY = -view.height.toFloat()
             }
-            NotRegisteredStates.DATE_CONFIRMED -> {
+            MainPageStates.DATE_CONFIRMED -> {
                 alpha = 1f
-                transitionY = -view.height.toFloat()
             }
-            NotRegisteredStates.NAME_VALIDATED -> {
+            MainPageStates.NAME_VALIDATED -> {
                 alpha = 1f
-                transitionY = -view.height.toFloat()
+            }
+            MainPageStates.REGISTERED -> {
+                alpha = 0f
             }
         }
     }
@@ -181,24 +189,27 @@ fun wrongDateViewAnimations(view: View, animState : NotRegisteredStates?) {
 
 }
 @BindingAdapter("enterNameViewAnimations")
-fun enterNameViewAnimations(view: View, animState : NotRegisteredStates?) {
+fun enterNameViewAnimations(view: View, animState : MainPageStates?) {
 
     var alpha = 0f
     animState?.let { state ->
         when(state){
-            NotRegisteredStates.DATE_NOT_SELECTED -> {
+            MainPageStates.DATE_NOT_SELECTED -> {
                 alpha = 0f
                 view.closeSoftKeyboard()
             }
-            NotRegisteredStates.DATE_SELECTED -> {
+            MainPageStates.DATE_SELECTED -> {
                 alpha = 0f
                 view.closeSoftKeyboard()
             }
-            NotRegisteredStates.DATE_CONFIRMED -> {
+            MainPageStates.DATE_CONFIRMED -> {
                 alpha = 1f
             }
-            NotRegisteredStates.NAME_VALIDATED -> {
+            MainPageStates.NAME_VALIDATED -> {
                 alpha = 1f
+            }
+            MainPageStates.REGISTERED -> {
+                alpha = 0f
             }
         }
     }
@@ -218,22 +229,63 @@ fun enterNameViewAnimations(view: View, animState : NotRegisteredStates?) {
         .duration = ANIMS_DURATION
 }
 @BindingAdapter("letsGoViewAnimations")
-fun letsGoViewAnimations(view: View, animState : NotRegisteredStates?) {
+fun letsGoViewAnimations(view: View, animState : MainPageStates?) {
 
     var alpha = 0f
     animState?.let { state ->
         when(state){
-            NotRegisteredStates.DATE_NOT_SELECTED -> {
+            MainPageStates.DATE_NOT_SELECTED -> {
                 alpha = 0f
             }
-            NotRegisteredStates.DATE_SELECTED -> {
+            MainPageStates.DATE_SELECTED -> {
                 alpha = 0f
             }
-            NotRegisteredStates.DATE_CONFIRMED -> {
+            MainPageStates.DATE_CONFIRMED -> {
                 alpha = 0f
             }
-            NotRegisteredStates.NAME_VALIDATED -> {
+            MainPageStates.NAME_VALIDATED -> {
                 alpha = 1f
+            }
+            MainPageStates.REGISTERED -> {
+                alpha = 0f
+            }
+        }
+    }
+    view.animate()
+        .alpha(alpha)
+        .setListener(object : Animator.AnimatorListener{
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationEnd(p0: Animator?) {
+
+                view.visibility = if(alpha == 0f) View.INVISIBLE else View.VISIBLE
+            }
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationStart(p0: Animator?) {
+                if(alpha == 1f)view.visibility = View.VISIBLE
+            }
+        })
+        .duration = ANIMS_DURATION
+}
+@BindingAdapter("welcomeViewAnimations")
+fun welcomeViewAnimations(view: View, animState : MainPageStates?) {
+
+    var alpha = 0f
+    animState?.let { state ->
+        when(state){
+            MainPageStates.DATE_NOT_SELECTED -> {
+                alpha = 1f
+            }
+            MainPageStates.DATE_SELECTED -> {
+                alpha = 1f
+            }
+            MainPageStates.DATE_CONFIRMED -> {
+                alpha = 1f
+            }
+            MainPageStates.NAME_VALIDATED -> {
+                alpha = 1f
+            }
+            MainPageStates.REGISTERED -> {
+                alpha = 0f
             }
         }
     }

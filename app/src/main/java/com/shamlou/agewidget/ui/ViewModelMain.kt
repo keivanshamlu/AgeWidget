@@ -3,6 +3,7 @@ package com.shamlou.agewidget.ui
 import android.util.Log
 import androidx.lifecycle.*
 import com.shamlou.agewidget.base.BirthResource
+import com.shamlou.agewidget.base.Event
 import com.shamlou.agewidget.domain.BirthDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.usecases.UseCaseBirthCheckUserBirthCache
@@ -28,13 +29,19 @@ class ViewModelMain
     private val _appWidgetId = MutableLiveData<Int?>()
     val appWidgetId: LiveData<Int?> = _appWidgetId
 
+    private val _registeredUser = MutableLiveData<UserBirthDomain?>()
+    val registeredUser: LiveData<UserBirthDomain?> = _registeredUser
+
     private val _selectedBirthDate = MutableLiveData<BirthDomain?>()
     val selectedBirthDate: LiveData<BirthDomain?> = _selectedBirthDate
 
-    private val _notRegisteredStates = MutableLiveData<NotRegisteredStates>().apply {
-        value = NotRegisteredStates.DATE_NOT_SELECTED
+    private val _closeKeyBoard = MutableLiveData<Event<Boolean>>()
+    val closeKeyBoard: LiveData<Event<Boolean>> = _closeKeyBoard
+
+    private val _notRegisteredStates = MutableLiveData<MainPageStates>().apply {
+        value = MainPageStates.DATE_NOT_SELECTED
     }
-    val notRegisteredStates: LiveData<NotRegisteredStates> = _notRegisteredStates
+    val mainPageStates: LiveData<MainPageStates> = _notRegisteredStates
 
     var enteredName: MutableLiveData<String> = MediatorLiveData()
 
@@ -53,9 +60,9 @@ class ViewModelMain
 
     private fun handleNameChanged(isValidNow: Boolean) {
 
-        if (isValidNow) _notRegisteredStates.value = NotRegisteredStates.NAME_VALIDATED
-        else if (_notRegisteredStates.value == NotRegisteredStates.NAME_VALIDATED)
-            _notRegisteredStates.value = NotRegisteredStates.DATE_CONFIRMED
+        if (isValidNow) _notRegisteredStates.value = MainPageStates.NAME_VALIDATED
+        else if (_notRegisteredStates.value == MainPageStates.NAME_VALIDATED)
+            _notRegisteredStates.value = MainPageStates.DATE_CONFIRMED
     }
 
     private fun checkUserBirthCache(): Job = viewModelScope.launch {
@@ -68,22 +75,10 @@ class ViewModelMain
 
             when (birthSource.status) {
                 BirthResource.Status.REGISTERED -> {
-                    Log.d(
-                        "REGISTERED",
-                        "${birthSource.data?.firstName} - ${birthSource.data?.userBirthDomain?.birthDateFormated}"
-                    )
                 }
                 BirthResource.Status.NOT_REGISTERED -> {
-                    Log.d(
-                        "NOT_REGISTERED",
-                        "NOT_REGISTERED"
-                    )
                 }
                 BirthResource.Status.LOADING -> {
-                    Log.d(
-                        "LOADING",
-                        "LOADING"
-                    )
                 }
             }
 
@@ -104,36 +99,42 @@ class ViewModelMain
             year.toString(),
             "$year-$month-$dayOfMonthyear"
         )
-        _notRegisteredStates.value = NotRegisteredStates.DATE_SELECTED
+        _notRegisteredStates.value = MainPageStates.DATE_SELECTED
     }
 
     fun deleteSelectedDate() {
 
         _selectedBirthDate.value = null
-        _notRegisteredStates.value = NotRegisteredStates.DATE_NOT_SELECTED
+        _notRegisteredStates.value = MainPageStates.DATE_NOT_SELECTED
     }
 
     fun dateConfirmed() {
 
         _notRegisteredStates.value =
-            if (nameIsValid.value == true) NotRegisteredStates.NAME_VALIDATED else NotRegisteredStates.DATE_CONFIRMED
+            if (nameIsValid.value == true) MainPageStates.NAME_VALIDATED else MainPageStates.DATE_CONFIRMED
     }
 
     fun letsGoButtonClicked(): Job = viewModelScope.launch {
 
-        selectedBirthDate.value?.let {
-            withContext(Dispatchers.IO){
+        _closeKeyBoard.value = Event(true)
+        selectedBirthDate.value?.let { birth ->
+            UserBirthDomain(enteredName.value ?: "", birth).let { userBirth ->
+                withContext(Dispatchers.IO) {
 
-                useCaseInsertUserBirthCache.invoke(UserBirthDomain(enteredName.value ?: "", it))
+                    useCaseInsertUserBirthCache.invoke(userBirth)
+                }
+                _registeredUser.value = userBirth
+                _selectedBirthDate.value = null
+                _notRegisteredStates.value = MainPageStates.REGISTERED
             }
-
         }
     }
 }
 
-enum class NotRegisteredStates {
+enum class MainPageStates {
     DATE_NOT_SELECTED,
     DATE_SELECTED,
     DATE_CONFIRMED,
-    NAME_VALIDATED
+    NAME_VALIDATED,
+    REGISTERED
 }

@@ -4,10 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.shamlou.agewidget.base.BirthResource
+import com.shamlou.agewidget.base.Resource
 import com.shamlou.agewidget.db.user.UserDao
 import com.shamlou.agewidget.db.user.toDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.domain.toRemote
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RepositoryBirthImpl
@@ -19,38 +22,33 @@ class RepositoryBirthImpl
         )
         try {
 
-            val response = userDao.getUserBirth()
-            emit(
-                response?.let {
-                    BirthResource.registered(it.toDomain())
-                } ?: run {
-                    BirthResource.notRegistered(null)
-                }
-            )
-            Log.d("TESTEST1" , "success")
+            withContext(Dispatchers.IO) {
+                val response = userDao.getUserBirth()
+                emit(
+                    response?.let {
+                        BirthResource.registered(it.toDomain())
+                    } ?: run {
+                        BirthResource.notRegistered(null)
+                    }
+                )
+                Log.d("TESTEST", "success")
+            }
         } catch (exception: Throwable) {
-            Log.d("TESTEST1" , exception.message?:"")
+            Log.d("TESTEST", exception.message ?: "")
             emit(
                 BirthResource.notRegistered(null)
             )
         }
     }
 
-    override fun setUserBirth(userBirthDomain: UserBirthDomain): LiveData<BirthResource<Unit>>  = liveData {
+    override fun setUserBirth(userBirthDomain: UserBirthDomain) {
 
-        emit(
-            BirthResource.loading(null)
-        )
-        try {
+            try {
 
-            userDao.insert(userBirthDomain.toRemote())
-
-            Log.d("TESTEST" , "success")
-        } catch (exception: Throwable) {
-            Log.d("TESTEST" , exception.message?:"")
-            emit(
-                BirthResource.notRegistered(null)
-            )
+                userDao.insert(userBirthDomain.toRemote())
+                Log.d("TESTEST", "success")
+            } catch (exception: Throwable) {
+                Log.d("TESTEST", exception.message ?: "")
+            }
         }
-    }
 }

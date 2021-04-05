@@ -5,8 +5,8 @@ import androidx.lifecycle.*
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.domain.BirthDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
-import com.shamlou.agewidget.usecases.UseCaseCheckUserBirthCache
-import com.shamlou.agewidget.usecases.UseCaseInsertUserBirthCache
+import com.shamlou.agewidget.usecases.UseCaseBirthCheckUserBirthCache
+import com.shamlou.agewidget.usecases.UseCaseBirthInsertUserBirthCache
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,8 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelMain
 @Inject constructor(
-    private val useCaseCheckUserBirthCache: UseCaseCheckUserBirthCache,
-    private val useCaseInsertUserBirthCache: UseCaseInsertUserBirthCache
+    private val useCaseCheckUserBirthCache: UseCaseBirthCheckUserBirthCache,
+    private val useCaseInsertUserBirthCache: UseCaseBirthInsertUserBirthCache
 ) : ViewModel() {
 
     private var userBirthCacheSource: LiveData<BirthResource<UserBirthDomain>> = MutableLiveData()
@@ -62,9 +62,7 @@ class ViewModelMain
 
 
         _userBirthCache.removeSource(userBirthCacheSource)
-        withContext(Dispatchers.IO) {
-            userBirthCacheSource = useCaseCheckUserBirthCache(Unit)
-        }
+        userBirthCacheSource = useCaseCheckUserBirthCache(Unit)
         _userBirthCache.addSource(userBirthCacheSource) { birthSource ->
             _userBirthCache.value = birthSource
 
@@ -76,8 +74,16 @@ class ViewModelMain
                     )
                 }
                 BirthResource.Status.NOT_REGISTERED -> {
+                    Log.d(
+                        "NOT_REGISTERED",
+                        "NOT_REGISTERED"
+                    )
                 }
                 BirthResource.Status.LOADING -> {
+                    Log.d(
+                        "LOADING",
+                        "LOADING"
+                    )
                 }
             }
 
@@ -116,9 +122,11 @@ class ViewModelMain
     fun letsGoButtonClicked(): Job = viewModelScope.launch {
 
         selectedBirthDate.value?.let {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO){
+
                 useCaseInsertUserBirthCache.invoke(UserBirthDomain(enteredName.value ?: "", it))
             }
+
         }
     }
 }

@@ -38,9 +38,7 @@ class ViewModelMain
     private val _closeKeyBoard = MutableLiveData<Event<Boolean>>()
     val closeKeyBoard: LiveData<Event<Boolean>> = _closeKeyBoard
 
-    private val _notRegisteredStates = MutableLiveData<MainPageStates>().apply {
-        value = MainPageStates.DATE_NOT_SELECTED
-    }
+    private val _notRegisteredStates = MutableLiveData<MainPageStates>()
     val mainPageStates: LiveData<MainPageStates> = _notRegisteredStates
 
     var enteredName: MutableLiveData<String> = MediatorLiveData()
@@ -75,8 +73,12 @@ class ViewModelMain
 
             when (birthSource.status) {
                 BirthResource.Status.REGISTERED -> {
+                    _registeredUser.value = birthSource.data
+                    _selectedBirthDate.value = null
+                    _notRegisteredStates.value = MainPageStates.REGISTERED
                 }
                 BirthResource.Status.NOT_REGISTERED -> {
+                    _notRegisteredStates.value = MainPageStates.DATE_NOT_SELECTED
                 }
                 BirthResource.Status.LOADING -> {
                 }

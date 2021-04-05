@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.shamlou.agewidget.db.AppDatabase
 import com.shamlou.agewidget.db.user.UserDao
+import com.shamlou.agewidget.manager.TimeManager
+import com.shamlou.agewidget.manager.TimeManagerImpl
 import com.shamlou.agewidget.repository.birth.RepositoryBirth
 import com.shamlou.agewidget.repository.birth.RepositoryBirthImpl
 import dagger.Module
@@ -38,5 +40,9 @@ object AppModule {
     dao: UserDao
   ): RepositoryBirth {
     return RepositoryBirthImpl(dao)
+  }
+  @Provides
+  fun provideTimeManager(): TimeManager {
+    return TimeManagerImpl()
   }
 }

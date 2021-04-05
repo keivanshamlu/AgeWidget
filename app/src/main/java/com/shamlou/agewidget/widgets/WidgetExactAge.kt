@@ -24,9 +24,9 @@ class WidgetExactAge : AppWidgetProvider() {
             context.packageName,
             R.layout.widget_exact_age
         )
-        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val today: LocalDate = LocalDate.now()
-        val birthday: LocalDate = LocalDate.parse("09-06-1998", formatter)
+        val birthday: LocalDate = LocalDate.parse("1998-06-09", formatter)
 
         val p: Period = Period.between(birthday, today)
 

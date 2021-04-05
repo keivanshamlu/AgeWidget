@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         calendar_view.date = GregorianCalendar(1998, 5, 9).timeInMillis
         calendar_view.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
 
-            viewModel.setSelectedDateButWeAreNotSure(year, month, dayOfMonth)
+            viewModel.setSelectedDateButWeAreNotSure(year, month+1, dayOfMonth)
         }
     }
 

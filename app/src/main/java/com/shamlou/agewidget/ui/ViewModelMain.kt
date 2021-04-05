@@ -9,6 +9,7 @@ import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.manager.TimeManager
 import com.shamlou.agewidget.usecases.UseCaseBirthCheckUserBirthCache
 import com.shamlou.agewidget.usecases.UseCaseBirthInsertUserBirthCache
+import com.shamlou.agewidget.usecases.UseCaseDeleteUserBirthCache
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,6 +23,7 @@ class ViewModelMain
 @Inject constructor(
     private val useCaseCheckUserBirthCache: UseCaseBirthCheckUserBirthCache,
     private val useCaseInsertUserBirthCache: UseCaseBirthInsertUserBirthCache,
+    private val useCaseDeleteUserBirthCache: UseCaseDeleteUserBirthCache,
     private val manager: TimeManager
 ) : ViewModel() {
 
@@ -45,7 +47,7 @@ class ViewModelMain
     val showSnackbarHelp: LiveData<Event<Boolean>> = _showSnackbarHelp
 
     private val _calculatedAge = MutableLiveData<Pair<Period, Long>>()
-    val calculatedAge: LiveData<Pair<Period , Long>> = _calculatedAge
+    val calculatedAge: LiveData<Pair<Period, Long>> = _calculatedAge
 
     private val _notRegisteredStates = MutableLiveData<MainPageStates>()
     val mainPageStates: LiveData<MainPageStates> = _notRegisteredStates
@@ -60,7 +62,7 @@ class ViewModelMain
     }
     val checkState: LiveData<Boolean> = Transformations.map(mainPageStates) {
 
-        if(it == MainPageStates.REGISTERED) registeredUser.value?.let { checkUserAge(it) }
+        if (it == MainPageStates.REGISTERED) registeredUser.value?.let { checkUserAge(it) }
         true
     }
 
@@ -70,7 +72,7 @@ class ViewModelMain
         checkUserBirthCache()
     }
 
-    private fun checkUserAge(userBirth : UserBirthDomain){
+    private fun checkUserAge(userBirth: UserBirthDomain) {
 
         _calculatedAge.value = manager.calculateAge(userBirth.userBirthDomain.birthDateFormated)
     }
@@ -113,12 +115,15 @@ class ViewModelMain
 
     fun setSelectedDateButWeAreNotSure(year: Int, month: Int, dayOfMonthyear: Int) {
 
-        Log.d("selected date", "$year-${(if(month < 10) "0" else "") + month}-${(if(dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}")
+        Log.d(
+            "selected date",
+            "$year-${(if (month < 10) "0" else "") + month}-${(if (dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}"
+        )
         _selectedBirthDate.value = BirthDomain(
             dayOfMonthyear.toString(),
             month.toString(),
             year.toString(),
-            "$year-${(if(month < 10) "0" else "") + month}-${(if(dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}"
+            "$year-${(if (month < 10) "0" else "") + month}-${(if (dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}"
         )
         _notRegisteredStates.value = MainPageStates.DATE_SELECTED
     }
@@ -129,14 +134,28 @@ class ViewModelMain
         _notRegisteredStates.value = MainPageStates.DATE_NOT_SELECTED
     }
 
-    fun howToAddWidgetClicked(){
+    fun howToAddWidgetClicked() {
 
         _showSnackbarHelp.value = Event(true)
     }
 
+    fun deleteCache(): Job = viewModelScope.launch {
+
+        _closeKeyBoard.value = Event(true)
+        withContext(Dispatchers.IO) {
+
+            useCaseDeleteUserBirthCache.invoke(Unit)
+        }
+        _selectedBirthDate.value = null
+        _registeredUser.value = null
+        _notRegisteredStates.value = MainPageStates.DATE_NOT_SELECTED
+    }
+
+
     fun dateConfirmed() {
 
-        _notRegisteredStates.value = if (nameIsValid.value == true) MainPageStates.NAME_VALIDATED else MainPageStates.DATE_CONFIRMED
+        _notRegisteredStates.value =
+            if (nameIsValid.value == true) MainPageStates.NAME_VALIDATED else MainPageStates.DATE_CONFIRMED
     }
 
     fun letsGoButtonClicked(): Job = viewModelScope.launch {

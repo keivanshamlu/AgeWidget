@@ -31,10 +31,9 @@ class RepositoryBirthImpl
                         BirthResource.notRegistered(null)
                     }
                 )
-                Log.d("TESTEST", "success")
             }
         } catch (exception: Throwable) {
-            Log.d("TESTEST", exception.message ?: "")
+            Log.d("exception", exception.message ?: "")
             emit(
                 BirthResource.notRegistered(null)
             )
@@ -46,9 +45,18 @@ class RepositoryBirthImpl
             try {
 
                 userDao.insert(userBirthDomain.toRemote())
-                Log.d("TESTEST", "success")
+
             } catch (exception: Throwable) {
-                Log.d("TESTEST", exception.message ?: "")
+                Log.d("exception", exception.message ?: "")
+            }
+        }
+    override fun deleteUserBirth() {
+
+            try {
+
+                userDao.deleteRaw()
+            } catch (exception: Throwable) {
+                Log.d("exception", exception.message ?: "")
             }
         }
 }

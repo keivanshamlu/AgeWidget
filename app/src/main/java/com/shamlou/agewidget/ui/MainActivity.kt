@@ -68,7 +68,10 @@ class MainActivity : AppCompatActivity() {
         })
         viewModel.mainPageStates.observe(this, Observer {})
         viewModel.nameIsValid.observe(this, Observer {})
-        viewModel.registeredUser.observe(this, Observer {})
+        viewModel.registeredUser.observe(this, Observer {
+
+            text_view_name_of_user.text = "Dear ${it?.firstName}"
+        })
         viewModel.calculatedAge.observe(this, Observer {
 
             it?.let { setChronometer(it.second) }

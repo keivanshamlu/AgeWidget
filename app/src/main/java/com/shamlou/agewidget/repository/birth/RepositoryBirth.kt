@@ -9,4 +9,5 @@ interface RepositoryBirth {
 
     fun getUserBirth(): LiveData<BirthResource<UserBirthDomain>>
     fun setUserBirth(userBirthDomain: UserBirthDomain)
+    fun deleteUserBirth()
 }

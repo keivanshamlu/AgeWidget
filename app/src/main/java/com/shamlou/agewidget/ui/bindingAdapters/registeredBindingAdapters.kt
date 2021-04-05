@@ -68,6 +68,47 @@ fun registeredViewAnimations(view: View, animState : MainPageStates?) {
 @BindingAdapter("app:allAgesViewAnimations")
 fun allAgesViewAnimations(view: View, animState : MainPageStates?) {
 
+    var transitionx = view.width.toFloat()
+    var alpha = 0f
+    animState?.let { state ->
+        when(state){
+            MainPageStates.DATE_NOT_SELECTED -> {
+                alpha = 0f
+            }
+            MainPageStates.DATE_SELECTED -> {
+                alpha = 0f
+            }
+            MainPageStates.DATE_CONFIRMED -> {
+                alpha = 0f
+            }
+            MainPageStates.NAME_VALIDATED -> {
+                alpha = 0f
+            }
+            MainPageStates.REGISTERED -> {
+                transitionx = 0f
+                alpha = 1f
+            }
+        }
+    }
+    view.animate()
+        .translationX(transitionx)
+        .alpha(alpha)
+        .setListener(object : Animator.AnimatorListener{
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationEnd(p0: Animator?) {
+
+                view.visibility = if(alpha == 0f) View.GONE else View.VISIBLE
+            }
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationStart(p0: Animator?) {
+                if(alpha == 1f)view.visibility = View.VISIBLE
+            }
+        })
+        .duration = ANIMS_DURATION
+}
+@BindingAdapter("app:allFunnyViewAnimations")
+fun allFunnyViewAnimations(view: View, animState : MainPageStates?) {
+
     var transitionx = -view.width.toFloat()
     var alpha = 0f
     animState?.let { state ->

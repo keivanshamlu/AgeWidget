@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:gravity="center"
-            android:text="welcome to age widget"
+            android:text="@string/welcome_to_age_widget"
             android:textColor="@color/steel_700"
             android:textSize="32dp"
             app:layout_constraintEnd_toEndOf="parent"

@@ -15,16 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/background_colors"
         android:id="@+id/constraint_layout">
 
         <include
-            tool:visibility="gone"
-            bind:viewModel="@{viewModel}"
+            android:id="@+id/layout_user_not_registererd"
             layout="@layout/layout_user_not_registererd"
-            android:id="@+id/layout_user_not_registererd"/>
+            bind:viewModel="@{viewModel}"
+            tool:layout_editor_absoluteX="0dp"
+            tool:layout_editor_absoluteY="0dp" />
 
         <include
-            tool:visibility="visible"
+            android:visibility="gone"
             bind:viewModel="@{viewModel}"
             layout="@layout/layout_user_registered"
             android:id="@+id/layout_user_registererd"/>

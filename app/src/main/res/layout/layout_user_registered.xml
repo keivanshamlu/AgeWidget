@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/tools" >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
         <variable
@@ -14,9 +13,192 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        welcomeViewAnimations="@{viewModel.mainPageStates}"
         android:background="@color/background_colors">
 
+        <TextView
+            android:id="@+id/text_view_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="22"
+            android:textColor="@color/steel_700"
+            android:textSize="80dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_title"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_age_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:gravity="center"
+            android:text="years,"
+            android:textColor="@color/steel_700"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age" />
+
+
+        <TextView
+            android:id="@+id/text_view_age_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center"
+            android:text="10"
+            android:textColor="@color/steel_700"
+            android:textSize="65dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_month_title"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_age" />
+
+        <TextView
+            android:id="@+id/text_view_age_month_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="18dp"
+            android:gravity="center"
+            android:text="months,"
+            android:textColor="@color/steel_700"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_month"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_day"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age_month" />
+
+        <TextView
+            android:id="@+id/text_view_age_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="18"
+            android:textColor="@color/steel_700"
+            android:textSize="65dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_day_title"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age_month_title"
+            app:layout_constraintTop_toTopOf="@+id/text_view_age_month" />
+
+        <TextView
+            android:id="@+id/text_view_age_day_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="18dp"
+            android:gravity="center"
+            android:text="days,"
+            android:textColor="@color/steel_700"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_day"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age_day" />
+
+        <TextView
+            android:id="@+id/text_view_age_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center"
+            android:text="10"
+            android:textColor="@color/steel_700"
+            android:textSize="65dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_hour_title"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_age_month" />
+
+        <TextView
+            android:id="@+id/text_view_age_hour_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="18dp"
+            android:gravity="center"
+            android:text="days,"
+            android:textColor="@color/steel_700"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_hour"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_minutes"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age_hour" />
+
+
+        <TextView
+            android:id="@+id/text_view_age_minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center"
+            android:text="10"
+            android:textColor="@color/steel_700"
+            android:textSize="65dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_minutes_title"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age_hour_title"
+            app:layout_constraintTop_toTopOf="@+id/text_view_age_hour" />
+
+        <TextView
+            android:id="@+id/text_view_age_minutes_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="18dp"
+            android:gravity="center"
+            android:text="days,"
+            android:textColor="@color/steel_700"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_hour"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_seconds"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age_minutes" />
+
+        <TextView
+            android:id="@+id/text_view_age_seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center"
+            android:text="10"
+            android:textColor="@color/steel_700"
+            android:textSize="65dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/text_view_age_seconds_title"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age_minutes_title"
+            app:layout_constraintTop_toTopOf="@+id/text_view_age_hour" />
+
+        <TextView
+            android:id="@+id/text_view_age_seconds_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="18dp"
+            android:gravity="center"
+            android:text="days,"
+            android:textColor="@color/steel_700"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_hour"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/text_view_age_seconds" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

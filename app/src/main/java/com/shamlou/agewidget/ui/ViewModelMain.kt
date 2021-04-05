@@ -41,6 +41,9 @@ class ViewModelMain
     private val _closeKeyBoard = MutableLiveData<Event<Boolean>>()
     val closeKeyBoard: LiveData<Event<Boolean>> = _closeKeyBoard
 
+    private val _showSnackbarHelp = MutableLiveData<Event<Boolean>>()
+    val showSnackbarHelp: LiveData<Event<Boolean>> = _showSnackbarHelp
+
     private val _calculatedAge = MutableLiveData<Pair<Period, Long>>()
     val calculatedAge: LiveData<Pair<Period , Long>> = _calculatedAge
 
@@ -124,6 +127,11 @@ class ViewModelMain
 
         _selectedBirthDate.value = null
         _notRegisteredStates.value = MainPageStates.DATE_NOT_SELECTED
+    }
+
+    fun howToAddWidgetClicked(){
+
+        _showSnackbarHelp.value = Event(true)
     }
 
     fun dateConfirmed() {

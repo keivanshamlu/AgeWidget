@@ -7,7 +7,9 @@ import android.widget.Chronometer.OnChronometerTickListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.shamlou.agewidget.R
 import com.shamlou.agewidget.base.closeSoftKeyboard
+import com.shamlou.agewidget.base.showSnackBarTop
 import com.shamlou.agewidget.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -79,6 +81,15 @@ class MainActivity : AppCompatActivity() {
 
             if (it.getContentIfNotHandled() == true) binding.root.closeSoftKeyboard()
         })
+        viewModel.showSnackbarHelp.observe(this, Observer {
+
+            if (it.getContentIfNotHandled() == true) showSnackbar()
+        })
+    }
+
+    private fun showSnackbar(){
+
+        showSnackBarTop(getString(R.string.add_widget_help) , 7000 , binding.root , "ok fine\uD83D\uDC4D\uD83C\uDFFB\uD83D\uDC4D\uD83C\uDFFB")
     }
 
     private fun setChronometer(base : Long) {

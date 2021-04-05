@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             app:allAgesViewAnimations="@{viewModel.mainPageStates}"
             android:id="@+id/layout_all_ages"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
@@ -201,7 +201,103 @@
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/text_view_age_seconds" />
 
+            <View
+                android:layout_marginStart="12dp"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toEndOf="@+id/text_view_age_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_age_seconds"/>
+
+            <View
+                android:background="@color/steel_500"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/text_view_age_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_age_seconds"/>
+
+            <View
+                android:background="@color/steel_500"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_age_seconds"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/text_view_not_registered_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="dear keivan"
+            android:textColor="@color/steel_700"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <TextView
+            android:id="@+id/funny_desc"
+            app:layout_constraintEnd_toStartOf="@+id/layout_all_ages"
+            app:layout_constraintTop_toBottomOf="@id/text_view_not_registered_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/this_is_your_exact_age_nyou_are_getting_closer_to_the_day_n_nyou_can_add_widget_to_your_home_screen_to_see_this_everytime_you_pick_up_your_phone_or_you_can_uninstall_it_you_lazy_potato"
+            android:textColor="@color/steel_700"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <TextView
+            android:id="@+id/quote"
+            app:layout_constraintEnd_toStartOf="@+id/layout_all_ages"
+            app:layout_constraintTop_toBottomOf="@id/button_snack_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:text="“You may delay, but time will not.”"
+            android:textColor="@color/steel_700"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <Button
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:onClick="@{() -> viewModel.howToAddWidgetClicked()}"
+            android:id="@+id/button_snack_bar"
+            android:text="how can i add widget?"
+            android:backgroundTint="@color/buttons_colors"
+            android:layout_marginEnd="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/funny_desc"/>
+
+
+        <TextView
+            android:id="@+id/funny_desc_2"
+            app:layout_constraintEnd_toStartOf="@+id/layout_all_ages"
+            app:layout_constraintTop_toBottomOf="@id/quote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:text="ok guys i don't know what should i write here so I'm just filling it with nonsence, fact, you wate about 20s to just read this bullsh**. and now hearts come ❤️❤️❤"
+            android:textColor="@color/steel_700"
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

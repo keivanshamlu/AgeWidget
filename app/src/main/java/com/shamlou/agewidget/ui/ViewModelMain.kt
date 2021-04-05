@@ -6,6 +6,7 @@ import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.base.Event
 import com.shamlou.agewidget.domain.BirthDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
+import com.shamlou.agewidget.manager.TimeManager
 import com.shamlou.agewidget.usecases.UseCaseBirthCheckUserBirthCache
 import com.shamlou.agewidget.usecases.UseCaseBirthInsertUserBirthCache
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,13 +14,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Period
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelMain
 @Inject constructor(
     private val useCaseCheckUserBirthCache: UseCaseBirthCheckUserBirthCache,
-    private val useCaseInsertUserBirthCache: UseCaseBirthInsertUserBirthCache
+    private val useCaseInsertUserBirthCache: UseCaseBirthInsertUserBirthCache,
+    private val manager: TimeManager
 ) : ViewModel() {
 
     private var userBirthCacheSource: LiveData<BirthResource<UserBirthDomain>> = MutableLiveData()
@@ -38,6 +41,9 @@ class ViewModelMain
     private val _closeKeyBoard = MutableLiveData<Event<Boolean>>()
     val closeKeyBoard: LiveData<Event<Boolean>> = _closeKeyBoard
 
+    private val _calculatedAge = MutableLiveData<Pair<Period, Long>>()
+    val calculatedAge: LiveData<Pair<Period , Long>> = _calculatedAge
+
     private val _notRegisteredStates = MutableLiveData<MainPageStates>()
     val mainPageStates: LiveData<MainPageStates> = _notRegisteredStates
 
@@ -49,11 +55,21 @@ class ViewModelMain
         handleNameChanged(nameIsValied)
         nameIsValied
     }
+    val checkState: LiveData<Boolean> = Transformations.map(mainPageStates) {
+
+        if(it == MainPageStates.REGISTERED) registeredUser.value?.let { checkUserAge(it) }
+        true
+    }
 
     init {
 
         //check user birth at first
         checkUserBirthCache()
+    }
+
+    private fun checkUserAge(userBirth : UserBirthDomain){
+
+        _calculatedAge.value = manager.calculateAge(userBirth.userBirthDomain.birthDateFormated)
     }
 
     private fun handleNameChanged(isValidNow: Boolean) {
@@ -112,8 +128,7 @@ class ViewModelMain
 
     fun dateConfirmed() {
 
-        _notRegisteredStates.value =
-            if (nameIsValid.value == true) MainPageStates.NAME_VALIDATED else MainPageStates.DATE_CONFIRMED
+        _notRegisteredStates.value = if (nameIsValid.value == true) MainPageStates.NAME_VALIDATED else MainPageStates.DATE_CONFIRMED
     }
 
     fun letsGoButtonClicked(): Job = viewModelScope.launch {

@@ -13,7 +13,7 @@ class TimeManagerImpl : TimeManager {
     override fun calculateAge(formattedDate: String): Pair<Period , Long> {
 
         val today: LocalDate = LocalDate.now()
-        val birthday: LocalDate = LocalDate.parse("1998-06-09", DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val birthday: LocalDate = LocalDate.parse(formattedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
         val period = Period.between(birthday, today)
 

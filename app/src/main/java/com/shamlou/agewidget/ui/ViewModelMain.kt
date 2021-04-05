@@ -110,12 +110,12 @@ class ViewModelMain
 
     fun setSelectedDateButWeAreNotSure(year: Int, month: Int, dayOfMonthyear: Int) {
 
-        Log.d("selected date", "$year-$month-$dayOfMonthyear")
+        Log.d("selected date", "$year-${(if(month < 10) "0" else "") + month}-${(if(dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}")
         _selectedBirthDate.value = BirthDomain(
             dayOfMonthyear.toString(),
             month.toString(),
             year.toString(),
-            "$year-$month-$dayOfMonthyear"
+            "$year-${(if(month < 10) "0" else "") + month}-${(if(dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}"
         )
         _notRegisteredStates.value = MainPageStates.DATE_SELECTED
     }

@@ -63,7 +63,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.mainPageStates.observe(this, Observer {})
         viewModel.nameIsValid.observe(this, Observer {})
         viewModel.registeredUser.observe(this, Observer {})
-        viewModel.calculatedAge.observe(this, Observer {})
+        viewModel.calculatedAge.observe(this, Observer {
+
+
+        })
         viewModel.checkState.observe(this, Observer {
 
 

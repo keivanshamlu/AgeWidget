@@ -11,15 +11,17 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        app:registeredViewAnimations="@{viewModel.mainPageStates}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_colors">
 
         <TextView
+            app:setAgeYear="@{viewModel.calculatedAge}"
             android:id="@+id/text_view_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="22"
             android:textColor="@color/steel_700"
@@ -27,7 +29,6 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/text_view_age_title"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -35,21 +36,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
+            android:layout_marginEnd="34dp"
             android:gravity="center"
             android:text="years,"
             android:textColor="@color/steel_700"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_age"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/text_view_age" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 
         <TextView
+            app:setAgeMonth="@{viewModel.calculatedAge}"
             android:id="@+id/text_view_age_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
             android:layout_marginBottom="9dp"
             android:gravity="center"
             android:text="10"
@@ -58,7 +59,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/text_view_age_month_title"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/text_view_age"
             app:layout_constraintTop_toBottomOf="@+id/text_view_age" />
 
         <TextView
@@ -66,18 +67,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="18dp"
             android:gravity="center"
             android:text="months,"
             android:textColor="@color/steel_700"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_age_month"
-            app:layout_constraintEnd_toStartOf="@id/text_view_age_day"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/text_view_age_month" />
 
         <TextView
+            app:setAgeDay="@{viewModel.calculatedAge}"
             android:id="@+id/text_view_age_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,10 +87,10 @@
             android:textColor="@color/steel_700"
             android:textSize="65dp"
             android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/text_view_age"
             app:layout_constraintEnd_toStartOf="@id/text_view_age_day_title"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/text_view_age_month_title"
-            app:layout_constraintTop_toTopOf="@+id/text_view_age_month" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_age_month" />
 
         <TextView
             android:id="@+id/text_view_age_day_title"
@@ -102,7 +103,6 @@
             android:textColor="@color/steel_700"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_age_day"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/text_view_age_day" />
 
@@ -110,17 +110,16 @@
             android:id="@+id/text_view_age_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
             android:layout_marginBottom="9dp"
             android:gravity="center"
-            android:text="10"
+            android:text="19"
             android:textColor="@color/steel_700"
             android:textSize="65dp"
             android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/text_view_age"
             app:layout_constraintEnd_toStartOf="@id/text_view_age_hour_title"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_age_month" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_age_day" />
 
         <TextView
             android:id="@+id/text_view_age_hour_title"
@@ -129,11 +128,10 @@
             android:layout_marginStart="3dp"
             android:layout_marginBottom="18dp"
             android:gravity="center"
-            android:text="days,"
+            android:text="hours,"
             android:textColor="@color/steel_700"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_age_hour"
-            app:layout_constraintEnd_toStartOf="@id/text_view_age_minutes"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/text_view_age_hour" />
 
@@ -142,17 +140,16 @@
             android:id="@+id/text_view_age_minutes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
             android:layout_marginBottom="9dp"
             android:gravity="center"
-            android:text="10"
+            android:text="37"
             android:textColor="@color/steel_700"
             android:textSize="65dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/text_view_age_minutes_title"
+            app:layout_constraintStart_toStartOf="@id/text_view_age"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/text_view_age_hour_title"
-            app:layout_constraintTop_toTopOf="@+id/text_view_age_hour" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_age_hour" />
 
         <TextView
             android:id="@+id/text_view_age_minutes_title"
@@ -161,11 +158,10 @@
             android:layout_marginStart="3dp"
             android:layout_marginBottom="18dp"
             android:gravity="center"
-            android:text="days,"
+            android:text="minutes,"
             android:textColor="@color/steel_700"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_hour"
-            app:layout_constraintEnd_toStartOf="@id/text_view_age_seconds"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_minutes"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/text_view_age_minutes" />
 
@@ -176,14 +172,13 @@
             android:layout_marginStart="3dp"
             android:layout_marginBottom="9dp"
             android:gravity="center"
-            android:text="10"
+            android:text="15"
             android:textColor="@color/steel_700"
-            android:textSize="65dp"
+            android:textSize="55dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/text_view_age_seconds_title"
+            app:layout_constraintStart_toStartOf="@id/text_view_age"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/text_view_age_minutes_title"
-            app:layout_constraintTop_toTopOf="@+id/text_view_age_hour" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_age_minutes" />
 
         <TextView
             android:id="@+id/text_view_age_seconds_title"
@@ -192,11 +187,10 @@
             android:layout_marginStart="3dp"
             android:layout_marginBottom="18dp"
             android:gravity="center"
-            android:text="days,"
+            android:text="seconds,"
             android:textColor="@color/steel_700"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_hour"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_age_seconds"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/text_view_age_seconds" />
 

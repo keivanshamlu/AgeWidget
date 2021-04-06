@@ -10,16 +10,22 @@ import android.content.Intent
 import android.os.SystemClock
 import android.widget.RemoteViews
 import com.shamlou.agewidget.R
+import com.shamlou.agewidget.manager.TimeManager
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 private const val ACTION_SCHEDULED_UPDATE = "com.shamlou.agewidget.SCHEDULED_UPDATE"
+@AndroidEntryPoint
 class WidgetExactAge : AppWidgetProvider() {
+
+    @Inject lateinit var timeManager: TimeManager
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -65,22 +71,11 @@ class WidgetExactAge : AppWidgetProvider() {
         intent.action = ACTION_SCHEDULED_UPDATE
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
 
-        // Get a calendar instance for midnight tomorrow.
-        val midnight = Calendar.getInstance()
-        midnight[Calendar.HOUR_OF_DAY] = 0
-        midnight[Calendar.MINUTE] = 0
-        // Schedule one second after midnight, to be sure we are in the right day next time this
-        // method is called.  Otherwise, we risk calling onUpdate multiple times within a few
-        // milliseconds
-        midnight[Calendar.SECOND] = 1
-        midnight[Calendar.MILLISECOND] = 0
-        midnight.add(Calendar.DAY_OF_YEAR, 1)
-
         // For API 19 and later, set may fire the intent a little later to save battery,
         // setExact ensures the intent goes off exactly at midnight.
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
-            midnight.timeInMillis,
+            timeManager.calculateNextMidnight(),
             pendingIntent
         )
     }

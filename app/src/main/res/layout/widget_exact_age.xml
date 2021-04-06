@@ -7,7 +7,7 @@
     android:background="#55000000">
 
     <Chronometer
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/chronometer_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,11 +22,24 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/chronometer_age"
         android:id="@+id/text_view_exact_age"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#092FEC"
         android:textSize="36sp"/>
+
+    <TextView
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/chronometer_age"
+        android:id="@+id/text_view_we_dont_have_your_birth_date"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#092FEC"
+        android:text="open AgeWidget app to add birthdate"
+        android:textSize="18sp"/>
+
 
 
 </RelativeLayout>

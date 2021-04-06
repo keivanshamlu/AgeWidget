@@ -86,13 +86,8 @@ class MainActivity : AppCompatActivity() {
         })
         viewModel.showSnackbarHelp.observe(this, Observer {
 
-            if (it.getContentIfNotHandled() == true) showSnackbar()
+            if (it.getContentIfNotHandled() == true) showSnackBarTop(getString(R.string.add_widget_help) , 8000 , binding.root , getString(R.string.ok_fine))
         })
-    }
-
-    private fun showSnackbar(){
-
-        showSnackBarTop(getString(R.string.add_widget_help) , 7000 , binding.root , "ok fine\uD83D\uDC4D\uD83C\uDFFB\uD83D\uDC4D\uD83C\uDFFB")
     }
 
     private fun setChronometer(base : Long) {
@@ -103,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                 val h = (time / 3600000).toInt()
                 val m = (time - h * 3600000).toInt() / 60000
                 val s = (time - h * 3600000 - m * 60000).toInt() / 1000
+                if(h == 0 && m == 0 && s== 0)viewModel.updateDate()
                 text_view_age_hour.text = if (h < 10) "0$h" else h.toString() + ""
                 text_view_age_minutes.text = if (m < 10) "0$m" else m.toString() + ""
                 text_view_age_seconds.text = if (s < 10) "0$s" else s.toString() + ""

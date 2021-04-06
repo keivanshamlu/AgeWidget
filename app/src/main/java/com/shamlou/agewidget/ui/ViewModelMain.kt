@@ -173,6 +173,10 @@ class ViewModelMain
             }
         }
     }
+    fun updateDate(){
+
+        _calculatedAge.value = registeredUser.value?.userBirthDomain?.birthDateFormated?.let { manager.calculateAge(it) }
+    }
 }
 
 enum class MainPageStates {

@@ -42,13 +42,7 @@ fun Activity.showSnackBarTop(snackBarText: String, timeLength: Int, view: View? 
             .apply {
 
                 val snackBarView = getView() as Snackbar.SnackbarLayout
-                try{
 
-                    (snackBarView.layoutParams as CoordinatorLayout.LayoutParams).gravity = Gravity.BOTTOM
-                }catch (e : Exception){
-
-                    (snackBarView.layoutParams as FrameLayout.LayoutParams).gravity = Gravity.BOTTOM
-                }
                 snackBarView.background = ContextCompat.getDrawable(context, R.drawable.snackbar_container)
                 (snackBarView.findViewById<View>(R.id.snackbar_text) as TextView).visibility = View.INVISIBLE
                 val snackView: View =
@@ -59,28 +53,17 @@ fun Activity.showSnackBarTop(snackBarText: String, timeLength: Int, view: View? 
 
                     snackView.button_dismiss_snackbar.text = it
                     snackView.button_dismiss_snackbar.setOnClickListener {
-                        snackBarView.visibility = View.INVISIBLE
+
                         dismiss()
                     }
                 } ?: kotlin.run {
 
                     snackView.button_dismiss_snackbar.visibility = View.GONE
                 }
-                if (timeLength != Snackbar.LENGTH_INDEFINITE)
-                    Handler().postDelayed({
-                        snackBarView.visibility = View.INVISIBLE
-                    }, timeLength.toLong())
 
                 snackBarView.setPadding(0, 0, 0, 0)
                 snackBarView.addView(snackView, 0)
                 snackBarView.visibility = View.INVISIBLE
-                addCallback(object : Snackbar.Callback() {
-
-                    override fun onShown(snackbar: Snackbar) {
-                        super.onShown(snackbar)
-                        snackBarView.visibility = View.VISIBLE
-                    }
-                })
             }.show()
     }
 }

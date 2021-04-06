@@ -1,6 +1,8 @@
 package com.shamlou.agewidget.ui
 
+import android.app.Activity
 import android.appwidget.AppWidgetManager
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.Chronometer.OnChronometerTickListener
@@ -38,12 +40,12 @@ class MainActivity : AppCompatActivity() {
                 AppWidgetManager.INVALID_APPWIDGET_ID
             )
         )
-
 //        setResult(RESULT_CANCELED);
-//        val resultValue = Intent()
-//        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
-//        setResult(Activity.RESULT_OK, resultValue)
-//        finish()
+        val mAppWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+        val resultValue = Intent()
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
+        setResult(Activity.RESULT_OK, resultValue)
+        finish()
 
         setCalnderStuff()
         observeViewModel()
@@ -98,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                 val h = (time / 3600000).toInt()
                 val m = (time - h * 3600000).toInt() / 60000
                 val s = (time - h * 3600000 - m * 60000).toInt() / 1000
-                if(h == 0 && m == 0 && s== 0)viewModel.updateDate()
+                if(h == 0 && m == 0 && (s == 0 || s == 1))viewModel.updateDate()
                 text_view_age_hour.text = if (h < 10) "0$h" else h.toString() + ""
                 text_view_age_minutes.text = if (m < 10) "0$m" else m.toString() + ""
                 text_view_age_seconds.text = if (s < 10) "0$s" else s.toString() + ""

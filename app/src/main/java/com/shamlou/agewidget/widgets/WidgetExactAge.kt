@@ -37,14 +37,14 @@ class WidgetExactAge : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
 
-        Log.d("TESTETS" , "onUpdate")
+        Log.d("TESTETST" , "onUpdate")
         scheduleNextUpdate(context)
-        var remoteViews = RemoteViews(
-            context.packageName,
-            R.layout.widget_exact_age
-        )
         GlobalScope.launch {
 
+            var remoteViews = RemoteViews(
+                context.packageName,
+                R.layout.widget_exact_age
+            )
             useCaseBirthCheckUserBirthCache.invoke(Unit).collect { userBirthDateState ->
 
                 when (userBirthDateState.status) {
@@ -52,7 +52,7 @@ class WidgetExactAge : AppWidgetProvider() {
                     BirthResource.Status.REGISTERED -> {
 
                         userBirthDateState.data?.let {
-                            remoteViews = calculateAndShowUserAge(remoteViews, it)
+                            appWidgetManager.updateAppWidget(appWidgetIds, calculateAndShowUserAge(remoteViews, it))
                         } ?: run { remoteViews = showWeDontHaveYourBirthDate(remoteViews) }
                     }
                     BirthResource.Status.NOT_REGISTERED -> {
@@ -61,9 +61,10 @@ class WidgetExactAge : AppWidgetProvider() {
                     }
                 }
             }
+
+            appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
         }
 
-        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
 
     }
 

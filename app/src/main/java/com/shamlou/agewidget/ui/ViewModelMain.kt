@@ -163,6 +163,7 @@ class ViewModelMain
         }
         _selectedBirthDate.value = null
         _registeredUser.value = null
+        _updateWidget.value = Event(true)
         _mainPageStates.value = MainPageStates.DATE_NOT_SELECTED
     }
 

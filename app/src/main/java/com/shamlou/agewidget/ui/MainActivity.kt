@@ -69,19 +69,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.appWidgetId.observe(this, Observer {})
         viewModel.updateWidget.observe(this, Observer {
 
-            it.getContentIfNotHandled()?.let {
-
-                val appWidgetId = AppWidgetManager.getInstance(application).getAppWidgetIds(
-                    ComponentName(
-                        application,
-                        WidgetExactAge::class.java
-                    )
-                )
-                val intent = Intent(this, WidgetExactAge::class.java)
-                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetId)
-                sendBroadcast(intent)
-            }
+            it.getContentIfNotHandled()?.let { updateWidgets() }
         })
         viewModel.resultOk.observe(this, Observer {
 
@@ -131,6 +119,19 @@ class MainActivity : AppCompatActivity() {
             }
         chronometer_age.base = base
         chronometer_age.start()
+    }
+    private fun updateWidgets(){
+
+        val appWidgetId = AppWidgetManager.getInstance(application).getAppWidgetIds(
+            ComponentName(
+                application,
+                WidgetExactAge::class.java
+            )
+        )
+        val intent = Intent(this, WidgetExactAge::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetId)
+        sendBroadcast(intent)
     }
 
 }

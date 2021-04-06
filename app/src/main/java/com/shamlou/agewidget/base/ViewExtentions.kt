@@ -3,15 +3,10 @@ package com.shamlou.agewidget.base
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.os.Handler
-import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.shamlou.agewidget.R
 import kotlinx.android.synthetic.main.custom_snackbar.*

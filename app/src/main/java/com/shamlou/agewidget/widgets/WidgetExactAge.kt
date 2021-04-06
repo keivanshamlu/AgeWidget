@@ -48,6 +48,7 @@ class WidgetExactAge : AppWidgetProvider() {
                 when (userBirthDateState.status) {
 
                     BirthResource.Status.REGISTERED -> {
+
                         userBirthDateState.data?.let {
                             remoteViews = calculateAndShowUserAge(remoteViews, it)
                         } ?: run { remoteViews = showWeDontHaveYourBirthDate(remoteViews) }
@@ -58,7 +59,6 @@ class WidgetExactAge : AppWidgetProvider() {
                     }
                 }
             }
-
         }
 
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)

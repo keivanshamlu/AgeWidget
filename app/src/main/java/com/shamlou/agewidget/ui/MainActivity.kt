@@ -40,12 +40,6 @@ class MainActivity : AppCompatActivity() {
                 AppWidgetManager.INVALID_APPWIDGET_ID
             )
         )
-//        setResult(RESULT_CANCELED);
-//        val mAppWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-//        val resultValue = Intent()
-//        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
-//        setResult(Activity.RESULT_OK, resultValue)
-//        finish()
 
         setCalnderStuff()
         observeViewModel()
@@ -70,6 +64,17 @@ class MainActivity : AppCompatActivity() {
         })
         viewModel.mainPageStates.observe(this, Observer {})
         viewModel.nameIsValid.observe(this, Observer {})
+        viewModel.appWidgetId.observe(this, Observer {})
+        viewModel.resultOk.observe(this, Observer {
+
+            it.getContentIfNotHandled()?.let { appWidgetId->
+
+                val resultValue = Intent()
+                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                setResult(Activity.RESULT_OK, resultValue)
+                this@MainActivity.showSnackBarTop(getString(R.string.widget_created) , 2000 , binding.root)
+            }
+        })
         viewModel.registeredUser.observe(this, Observer {
 
             text_view_name_of_user.text = "Dear ${it?.firstName}"

@@ -34,6 +34,12 @@ class ViewModelMain
     private val _appWidgetId = MutableLiveData<Int?>()
     val appWidgetId: LiveData<Int?> = _appWidgetId
 
+    private val _resultOk = MutableLiveData<Event<Int>>()
+    val resultOk: LiveData<Event<Int>> = _resultOk
+
+    private val _resultCancel = MutableLiveData<Event<Boolean>>()
+    val resultCancel: LiveData<Event<Boolean>> = _resultCancel
+
     private val _registeredUser = MutableLiveData<UserBirthDomain?>()
     val registeredUser: LiveData<UserBirthDomain?> = _registeredUser
 
@@ -49,8 +55,8 @@ class ViewModelMain
     private val _calculatedAge = MutableLiveData<Pair<Period, Long>>()
     val calculatedAge: LiveData<Pair<Period, Long>> = _calculatedAge
 
-    private val _notRegisteredStates = MutableLiveData<MainPageStates>()
-    val mainPageStates: LiveData<MainPageStates> = _notRegisteredStates
+    private val _mainPageStates = MutableLiveData<MainPageStates>()
+    val mainPageStates: LiveData<MainPageStates> = _mainPageStates
 
     var enteredName: MutableLiveData<String> = MediatorLiveData()
 
@@ -62,7 +68,10 @@ class ViewModelMain
     }
     val checkState: LiveData<Boolean> = Transformations.map(mainPageStates) {
 
-        if (it == MainPageStates.REGISTERED) registeredUser.value?.let { checkUserAge(it) }
+        if (it == MainPageStates.REGISTERED) {
+            registeredUser.value?.let { checkUserAge(it) }
+            appWidgetId.value?.let { _resultOk.value = Event(it) }
+        }
         true
     }
 
@@ -79,9 +88,9 @@ class ViewModelMain
 
     private fun handleNameChanged(isValidNow: Boolean) {
 
-        if (isValidNow) _notRegisteredStates.value = MainPageStates.NAME_VALIDATED
-        else if (_notRegisteredStates.value == MainPageStates.NAME_VALIDATED)
-            _notRegisteredStates.value = MainPageStates.DATE_CONFIRMED
+        if (isValidNow) _mainPageStates.value = MainPageStates.NAME_VALIDATED
+        else if (_mainPageStates.value == MainPageStates.NAME_VALIDATED)
+            _mainPageStates.value = MainPageStates.DATE_CONFIRMED
     }
 
     private fun checkUserBirthCache(): Job = viewModelScope.launch {
@@ -94,12 +103,14 @@ class ViewModelMain
 
             when (birthSource.status) {
                 BirthResource.Status.REGISTERED -> {
+                    //configuration mode
+                    appWidgetId.value?.let { _resultOk.value = Event(it) }
                     _registeredUser.value = birthSource.data
                     _selectedBirthDate.value = null
-                    _notRegisteredStates.value = MainPageStates.REGISTERED
+                    _mainPageStates.value = MainPageStates.REGISTERED
                 }
                 BirthResource.Status.NOT_REGISTERED -> {
-                    _notRegisteredStates.value = MainPageStates.DATE_NOT_SELECTED
+                    _mainPageStates.value = MainPageStates.DATE_NOT_SELECTED
                 }
                 BirthResource.Status.LOADING -> {
                 }
@@ -125,13 +136,13 @@ class ViewModelMain
             year.toString(),
             "$year-${(if (month < 10) "0" else "") + month}-${(if (dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}"
         )
-        _notRegisteredStates.value = MainPageStates.DATE_SELECTED
+        _mainPageStates.value = MainPageStates.DATE_SELECTED
     }
 
     fun deleteSelectedDate() {
 
         _selectedBirthDate.value = null
-        _notRegisteredStates.value = MainPageStates.DATE_NOT_SELECTED
+        _mainPageStates.value = MainPageStates.DATE_NOT_SELECTED
     }
 
     fun howToAddWidgetClicked() {
@@ -148,13 +159,13 @@ class ViewModelMain
         }
         _selectedBirthDate.value = null
         _registeredUser.value = null
-        _notRegisteredStates.value = MainPageStates.DATE_NOT_SELECTED
+        _mainPageStates.value = MainPageStates.DATE_NOT_SELECTED
     }
 
 
     fun dateConfirmed() {
 
-        _notRegisteredStates.value =
+        _mainPageStates.value =
             if (nameIsValid.value == true) MainPageStates.NAME_VALIDATED else MainPageStates.DATE_CONFIRMED
     }
 
@@ -169,7 +180,8 @@ class ViewModelMain
                 }
                 _registeredUser.value = userBirth
                 _selectedBirthDate.value = null
-                _notRegisteredStates.value = MainPageStates.REGISTERED
+                _mainPageStates.value = MainPageStates.REGISTERED
+
             }
         }
     }

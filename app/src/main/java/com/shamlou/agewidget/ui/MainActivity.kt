@@ -41,11 +41,11 @@ class MainActivity : AppCompatActivity() {
             )
         )
 //        setResult(RESULT_CANCELED);
-        val mAppWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-        val resultValue = Intent()
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
-        setResult(Activity.RESULT_OK, resultValue)
-        finish()
+//        val mAppWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+//        val resultValue = Intent()
+//        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId)
+//        setResult(Activity.RESULT_OK, resultValue)
+//        finish()
 
         setCalnderStuff()
         observeViewModel()

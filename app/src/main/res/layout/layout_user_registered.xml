@@ -180,7 +180,7 @@
                 android:gravity="center"
                 android:text="15"
                 android:textColor="@color/steel_700"
-                android:textSize="55dp"
+                android:textSize="65dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/text_view_age"
                 app:layout_constraintHorizontal_chainStyle="packed"

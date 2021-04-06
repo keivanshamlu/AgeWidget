@@ -88,7 +88,7 @@ class ViewModelMain
 
 
         _userBirthCache.removeSource(userBirthCacheSource)
-        userBirthCacheSource = useCaseCheckUserBirthCache(Unit)
+        userBirthCacheSource = useCaseCheckUserBirthCache(Unit).asLiveData()
         _userBirthCache.addSource(userBirthCacheSource) { birthSource ->
             _userBirthCache.value = birthSource
 

@@ -2,6 +2,7 @@ package com.shamlou.agewidget.ui
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
@@ -13,6 +14,7 @@ import com.shamlou.agewidget.R
 import com.shamlou.agewidget.base.closeSoftKeyboard
 import com.shamlou.agewidget.base.showSnackBarTop
 import com.shamlou.agewidget.databinding.ActivityMainBinding
+import com.shamlou.agewidget.widgets.WidgetExactAge
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_user_not_registererd.*
@@ -65,11 +67,28 @@ class MainActivity : AppCompatActivity() {
         viewModel.mainPageStates.observe(this, Observer {})
         viewModel.nameIsValid.observe(this, Observer {})
         viewModel.appWidgetId.observe(this, Observer {})
+        viewModel.updateWidget.observe(this, Observer {
+
+            it.getContentIfNotHandled()?.let {
+
+                val appWidgetId = AppWidgetManager.getInstance(application).getAppWidgetIds(
+                    ComponentName(
+                        application,
+                        WidgetExactAge::class.java
+                    )
+                )
+                val intent = Intent(this, WidgetExactAge::class.java)
+                intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetId)
+                sendBroadcast(intent)
+            }
+        })
         viewModel.resultOk.observe(this, Observer {
 
             it.getContentIfNotHandled()?.let { appWidgetId->
 
                 val resultValue = Intent()
+
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                 setResult(Activity.RESULT_OK, resultValue)
                 this@MainActivity.showSnackBarTop(getString(R.string.widget_created) , 2000 , binding.root)

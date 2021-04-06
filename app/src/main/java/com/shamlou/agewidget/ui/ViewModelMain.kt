@@ -34,6 +34,9 @@ class ViewModelMain
     private val _appWidgetId = MutableLiveData<Int?>()
     val appWidgetId: LiveData<Int?> = _appWidgetId
 
+    private val _updateWidget = MutableLiveData<Event<Boolean>>()
+    val updateWidget: LiveData<Event<Boolean>> = _updateWidget
+
     private val _resultOk = MutableLiveData<Event<Int>>()
     val resultOk: LiveData<Event<Int>> = _resultOk
 
@@ -71,6 +74,7 @@ class ViewModelMain
         if (it == MainPageStates.REGISTERED) {
             registeredUser.value?.let { checkUserAge(it) }
             appWidgetId.value?.let { _resultOk.value = Event(it) }
+            _updateWidget.value = Event(true)
         }
         true
     }

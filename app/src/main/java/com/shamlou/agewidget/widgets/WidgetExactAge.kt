@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import com.shamlou.agewidget.R
@@ -36,6 +37,7 @@ class WidgetExactAge : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
 
+        Log.d("TESTETS" , "onUpdate")
         scheduleNextUpdate(context)
         var remoteViews = RemoteViews(
             context.packageName,

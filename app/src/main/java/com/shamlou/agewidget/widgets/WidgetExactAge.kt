@@ -23,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 
@@ -57,7 +58,7 @@ class WidgetExactAge : AppWidgetProvider() {
                     BirthResource.Status.REGISTERED -> {
 
                         userBirthDateState.data?.let {
-                            appWidgetManager.updateAppWidget(appWidgetIds, calculateAndShowUserAge(remoteViews, it))
+                            appWidgetManager.updateAppWidget(appWidgetIds, calculateAndShowUserAge(remoteViews, it, context))
                         } ?: run { remoteViews = showWeDontHaveYourBirthDate(remoteViews) }
                     }
                     BirthResource.Status.NOT_REGISTERED -> {
@@ -73,20 +74,19 @@ class WidgetExactAge : AppWidgetProvider() {
 
     private fun calculateAndShowUserAge(
         remoteViews: RemoteViews,
-        userBirthDomain: UserBirthDomain
+        userBirthDomain: UserBirthDomain,
+        context: Context
     ): RemoteViews {
 
 
-        val calculateAge =
-            timeManager.calculateAge(userBirthDomain.userBirthDomain.birthDateFormated)
+        val calculateAge = timeManager.calculateAge(userBirthDomain.userBirthDomain.birthDateFormated)
 
         remoteViews.setViewVisibility(R.id.text_view_exact_age, View.VISIBLE)
         remoteViews.setViewVisibility(R.id.chronometer_age, View.VISIBLE)
         remoteViews.setViewVisibility(R.id.text_view_we_dont_have_your_birth_date, View.GONE)
-        remoteViews.setTextViewText(
-            R.id.text_view_exact_age,
-            "${calculateAge.first.years}:${calculateAge.first.months}:${calculateAge.first.days}"
-        )
+        remoteViews.setViewVisibility(R.id.text_view_chronometer_helper, if(calculateAge.second > 3600000)View.GONE else View.VISIBLE)
+        if(calculateAge.second < 3600000)scheduleNextUpdate(context , timeManager.calculateNext1Am())
+        remoteViews.setTextViewText(R.id.text_view_exact_age, "${calculateAge.first.years}:${calculateAge.first.months}:${calculateAge.first.days}")
         remoteViews.setChronometerCountDown(R.id.chronometer_age, false)
         remoteViews.setChronometer(R.id.chronometer_age, SystemClock.elapsedRealtime() - calculateAge.second, null, true)
         return remoteViews
@@ -105,12 +105,15 @@ class WidgetExactAge : AppWidgetProvider() {
 
         if (intent.action == ACTION_SCHEDULED_UPDATE) {
 
+            Log.d("TESTETST" , "onReceive")
             context.updateWidgets()
         }
         super.onReceive(context, intent)
     }
 
     private fun scheduleNextUpdate(context: Context , nextUpdateTime: Long) {
+
+        Log.d("TESTEST" , "scheduleNextUpdate ${((nextUpdateTime - Calendar.getInstance().timeInMillis)/60000)}")
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         // Substitute AppWidget for whatever you named your AppWidgetProvider subclass
         val intent = Intent(context, WidgetExactAge::class.java)

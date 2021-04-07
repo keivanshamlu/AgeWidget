@@ -8,4 +8,6 @@ interface TimeManager {
     fun calculateAge(formattedDate : String) : Pair<Period , Long>
 
     fun calculateNextMidnight() : Long
+
+    fun calculateNext1Am() : Long
 }

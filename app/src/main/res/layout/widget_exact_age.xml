@@ -7,30 +7,34 @@
     android:background="#55000000">
 
     <Chronometer
-        android:visibility="visible"
+        android:layout_toRightOf="@+id/text_view_chronometer_helper"
+        android:visibility="gone"
         android:id="@+id/chronometer_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:gravity="center"
         android:textColor="#092FEC"
         android:format="HH:SS"
+        android:layout_marginStart="10dp"
         android:textSize="30dp"/>
     <TextView
+        android:text="00:"
         android:visibility="gone"
         android:id="@+id/text_view_chronometer_helper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
         android:gravity="center"
         android:textColor="#092FEC"
         android:textSize="30dp"/>
 
     <TextView
-        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_above="@+id/chronometer_age"
         android:id="@+id/text_view_exact_age"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#092FEC"

@@ -1,6 +1,7 @@
 package com.shamlou.agewidget.manager
 
 import android.os.SystemClock
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
@@ -38,6 +39,23 @@ class TimeManagerImpl : TimeManager {
         midnight[Calendar.MILLISECOND] = 0
         midnight.add(Calendar.DAY_OF_YEAR, 1)
 
+        return midnight.timeInMillis
+    }
+
+    override fun calculateNext1Am(): Long {
+
+        // Get a calendar instance for 1 am.
+        val midnight = Calendar.getInstance()
+        midnight[Calendar.HOUR_OF_DAY] = 1
+        midnight[Calendar.MINUTE] = 0
+
+        // Schedule one second after midnight, to be sure we are in the right day next time this
+        // method is called.  Otherwise, we risk calling onUpdate multiple times within a few
+        // milliseconds
+        midnight[Calendar.SECOND] = 1
+        midnight[Calendar.MILLISECOND] = 0
+
+        Log.d("TESTEST" , ((midnight.timeInMillis - Calendar.getInstance().timeInMillis)/60000).toString())
         return midnight.timeInMillis
     }
 

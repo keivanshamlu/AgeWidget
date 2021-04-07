@@ -10,6 +10,8 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
+import android.widget.Toast
+import androidx.annotation.CallSuper
 import com.shamlou.agewidget.R
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.domain.UserBirthDomain
@@ -31,6 +33,7 @@ class WidgetExactAge : AppWidgetProvider() {
     lateinit var timeManager: TimeManager
     @Inject
     lateinit var useCaseBirthCheckUserBirthCache: UseCaseBirthCheckUserBirthCache
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -97,17 +100,23 @@ class WidgetExactAge : AppWidgetProvider() {
         return remoteViews
     }
 
-    override fun onReceive(context: Context?, intent: Intent) {
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+
         if (intent.action == ACTION_SCHEDULED_UPDATE) {
-            val manager = AppWidgetManager.getInstance(context)
-            val ids = manager.getAppWidgetIds(context?.let {
+
+            Toast.makeText(context , "Receivver mupdate" , Toast.LENGTH_SHORT).show()
+            Log.d("TESTEST" , "Receivver mupdate")
+            val appWidgetId = AppWidgetManager.getInstance(context).getAppWidgetIds(
                 ComponentName(
-                    it,
+                    context,
                     WidgetExactAge::class.java
                 )
-            })
-            Log.d("TESTEST" , "Receivver mupdate")
-            onUpdate(context!!, manager, ids)
+            )
+            val intent = Intent(context, WidgetExactAge::class.java)
+            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetId)
+            context.sendBroadcast(intent)
         }
         super.onReceive(context, intent)
     }
@@ -126,6 +135,5 @@ class WidgetExactAge : AppWidgetProvider() {
             timeManager.calculateNextMidnight(),
             pendingIntent
         )
-        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), INTERVAL_MILLIS, pendingIntent);
     }
 }

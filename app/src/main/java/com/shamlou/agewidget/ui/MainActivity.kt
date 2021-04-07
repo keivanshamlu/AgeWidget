@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import com.shamlou.agewidget.R
 import com.shamlou.agewidget.base.closeSoftKeyboard
 import com.shamlou.agewidget.base.showSnackBarTop
+import com.shamlou.agewidget.base.updateWidgets
 import com.shamlou.agewidget.databinding.ActivityMainBinding
 import com.shamlou.agewidget.widgets.WidgetExactAge
 import dagger.hilt.android.AndroidEntryPoint
@@ -117,21 +118,8 @@ class MainActivity : AppCompatActivity() {
                 text_view_age_minutes.text = if (m < 10) "0$m" else m.toString() + ""
                 text_view_age_seconds.text = if (s < 10) "0$s" else s.toString() + ""
             }
-        chronometer_age.base = base
+        chronometer_age.base = SystemClock.elapsedRealtime() - base
         chronometer_age.start()
-    }
-    private fun updateWidgets(){
-
-        val appWidgetId = AppWidgetManager.getInstance(application).getAppWidgetIds(
-            ComponentName(
-                application,
-                WidgetExactAge::class.java
-            )
-        )
-        val intent = Intent(this, WidgetExactAge::class.java)
-        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetId)
-        sendBroadcast(intent)
     }
 
 }

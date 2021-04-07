@@ -21,7 +21,7 @@ class TimeManagerImpl : TimeManager {
                 TimeUnit.MINUTES.toMillis(SimpleDateFormat("mm").format(Date()).toLong()) +
                 TimeUnit.SECONDS.toMillis(SimpleDateFormat("ss").format(Date()).toLong())
 
-        return Pair(period , SystemClock.elapsedRealtime() - currentClockTime)
+        return Pair(period , currentClockTime)
     }
 
     override fun calculateNextMidnight(): Long {

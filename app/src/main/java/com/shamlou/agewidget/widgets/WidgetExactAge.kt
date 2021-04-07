@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
@@ -14,6 +15,7 @@ import android.widget.Toast
 import androidx.annotation.CallSuper
 import com.shamlou.agewidget.R
 import com.shamlou.agewidget.base.BirthResource
+import com.shamlou.agewidget.base.updateWidgets
 import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.manager.TimeManager
 import com.shamlou.agewidget.usecases.UseCaseBirthCheckUserBirthCache
@@ -41,7 +43,7 @@ class WidgetExactAge : AppWidgetProvider() {
     ) {
 
         Log.d("TESTETST" , "onUpdate")
-        scheduleNextUpdate(context)
+        scheduleNextUpdate(context , timeManager.calculateNextMidnight())
         GlobalScope.launch {
 
             var remoteViews = RemoteViews(
@@ -67,8 +69,6 @@ class WidgetExactAge : AppWidgetProvider() {
 
             appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
         }
-
-
     }
 
     private fun calculateAndShowUserAge(
@@ -88,7 +88,7 @@ class WidgetExactAge : AppWidgetProvider() {
             "${calculateAge.first.years}:${calculateAge.first.months}:${calculateAge.first.days}"
         )
         remoteViews.setChronometerCountDown(R.id.chronometer_age, false)
-        remoteViews.setChronometer(R.id.chronometer_age, calculateAge.second, null, true)
+        remoteViews.setChronometer(R.id.chronometer_age, SystemClock.elapsedRealtime() - calculateAge.second, null, true)
         return remoteViews
     }
 
@@ -105,23 +105,12 @@ class WidgetExactAge : AppWidgetProvider() {
 
         if (intent.action == ACTION_SCHEDULED_UPDATE) {
 
-            Toast.makeText(context , "Receivver mupdate" , Toast.LENGTH_SHORT).show()
-            Log.d("TESTEST" , "Receivver mupdate")
-            val appWidgetId = AppWidgetManager.getInstance(context).getAppWidgetIds(
-                ComponentName(
-                    context,
-                    WidgetExactAge::class.java
-                )
-            )
-            val intent = Intent(context, WidgetExactAge::class.java)
-            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetId)
-            context.sendBroadcast(intent)
+            context.updateWidgets()
         }
         super.onReceive(context, intent)
     }
 
-    private fun scheduleNextUpdate(context: Context) {
+    private fun scheduleNextUpdate(context: Context , nextUpdateTime: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         // Substitute AppWidget for whatever you named your AppWidgetProvider subclass
         val intent = Intent(context, WidgetExactAge::class.java)
@@ -132,7 +121,7 @@ class WidgetExactAge : AppWidgetProvider() {
         // setExact ensures the intent goes off exactly at midnight.
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
-            timeManager.calculateNextMidnight(),
+            nextUpdateTime,
             pendingIntent
         )
     }

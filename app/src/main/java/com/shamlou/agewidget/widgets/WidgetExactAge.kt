@@ -106,6 +106,7 @@ class WidgetExactAge : AppWidgetProvider() {
                     WidgetExactAge::class.java
                 )
             })
+            Log.d("TESTEST" , "Receivver mupdate")
             onUpdate(context!!, manager, ids)
         }
         super.onReceive(context, intent)
@@ -125,5 +126,6 @@ class WidgetExactAge : AppWidgetProvider() {
             timeManager.calculateNextMidnight(),
             pendingIntent
         )
+        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), INTERVAL_MILLIS, pendingIntent);
     }
 }

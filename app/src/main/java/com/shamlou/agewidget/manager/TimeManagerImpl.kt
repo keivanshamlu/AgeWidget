@@ -37,6 +37,7 @@ class TimeManagerImpl : TimeManager {
         midnight[Calendar.SECOND] = 1
         midnight[Calendar.MILLISECOND] = 0
         midnight.add(Calendar.DAY_OF_YEAR, 1)
+
         return midnight.timeInMillis
     }
 

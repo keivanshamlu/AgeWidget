@@ -10,4 +10,6 @@ interface TimeManager {
     fun calculateNextMidnight() : Long
 
     fun calculateNext1Am() : Long
+
+    fun isLessThanOneHour(timeAsMilis : Long) : Boolean
 }

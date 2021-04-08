@@ -59,4 +59,6 @@ class TimeManagerImpl : TimeManager {
         return midnight.timeInMillis
     }
 
+    override fun isLessThanOneHour(timeAsMilis: Long): Boolean = timeAsMilis < 60 * 60 * 1000
+
 }

@@ -43,7 +43,6 @@ class WidgetExactAge : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
 
-        Log.d("TESTETST" , "onUpdate")
         scheduleNextUpdate(context , timeManager.calculateNextMidnight())
         GlobalScope.launch {
 
@@ -84,11 +83,11 @@ class WidgetExactAge : AppWidgetProvider() {
         remoteViews.setViewVisibility(R.id.text_view_exact_age, View.VISIBLE)
         remoteViews.setViewVisibility(R.id.chronometer_age, View.VISIBLE)
         remoteViews.setViewVisibility(R.id.text_view_we_dont_have_your_birth_date, View.GONE)
-        remoteViews.setViewVisibility(R.id.text_view_chronometer_helper, if(calculateAge.second > 3600000)View.GONE else View.VISIBLE)
-        if(calculateAge.second < 3600000)scheduleNextUpdate(context , timeManager.calculateNext1Am())
+        remoteViews.setViewVisibility(R.id.text_view_chronometer_helper, if(timeManager.isLessThanOneHour(calculateAge.second))View.VISIBLE else View.GONE)
         remoteViews.setTextViewText(R.id.text_view_exact_age, "${calculateAge.first.years}:${calculateAge.first.months}:${calculateAge.first.days}")
         remoteViews.setChronometerCountDown(R.id.chronometer_age, false)
         remoteViews.setChronometer(R.id.chronometer_age, SystemClock.elapsedRealtime() - calculateAge.second, null, true)
+        if(timeManager.isLessThanOneHour(calculateAge.second))scheduleNextUpdate(context , timeManager.calculateNext1Am())
         return remoteViews
     }
 
@@ -105,7 +104,6 @@ class WidgetExactAge : AppWidgetProvider() {
 
         if (intent.action == ACTION_SCHEDULED_UPDATE) {
 
-            Log.d("TESTETST" , "onReceive")
             context.updateWidgets()
         }
         super.onReceive(context, intent)
@@ -113,15 +111,12 @@ class WidgetExactAge : AppWidgetProvider() {
 
     private fun scheduleNextUpdate(context: Context , nextUpdateTime: Long) {
 
-        Log.d("TESTEST" , "scheduleNextUpdate ${((nextUpdateTime - Calendar.getInstance().timeInMillis)/60000)}")
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        // Substitute AppWidget for whatever you named your AppWidgetProvider subclass
+
         val intent = Intent(context, WidgetExactAge::class.java)
         intent.action = ACTION_SCHEDULED_UPDATE
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
 
-        // For API 19 and later, set may fire the intent a little later to save battery,
-        // setExact ensures the intent goes off exactly at midnight.
         alarmManager.setExact(
             AlarmManager.RTC_WAKEUP,
             nextUpdateTime,

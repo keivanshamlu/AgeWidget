@@ -4,12 +4,15 @@ import android.animation.Animator
 import android.content.res.Resources
 import android.os.Handler
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.shamlou.agewidget.ANIMS_DURATION
+import com.shamlou.agewidget.R
 import com.shamlou.agewidget.base.closeSoftKeyboard
 import com.shamlou.agewidget.ui.MainPageStates
 
 internal val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+internal val Float.dp: Float get() = (this * Resources.getSystem().displayMetrics.density)
 
 @BindingAdapter("app:goneUnless")
 fun goneUnless(view: View, visible: Boolean) {
@@ -66,6 +69,7 @@ fun dateLayoutViewAnimations(view: View, animState : MainPageStates?) {
 
     var transitionY = 0f
     var alpha = 0f
+    val datePickerHeight = view.resources.getDimension(R.dimen.date_picker_height)
     animState?.let { state ->
         when(state){
             MainPageStates.DATE_NOT_SELECTED -> {
@@ -77,15 +81,15 @@ fun dateLayoutViewAnimations(view: View, animState : MainPageStates?) {
                 alpha = 1f
             }
             MainPageStates.DATE_CONFIRMED -> {
-                transitionY = -300.dp.toFloat()
+                transitionY = -datePickerHeight
                 alpha = 1f
             }
             MainPageStates.NAME_VALIDATED -> {
-                transitionY = -300.dp.toFloat()
+                transitionY = -datePickerHeight
                 alpha = 1f
             }
             MainPageStates.REGISTERED -> {
-                transitionY = -300.dp.toFloat()
+                transitionY = -datePickerHeight
                 alpha = 0f
             }
         }

@@ -46,15 +46,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_not_registered_welcome" />
 
-        <CalendarView
-            android:id="@+id/calendar_view"
+        <DatePicker
+            android:datePickerMode="spinner"
+            android:id="@+id/date_picker"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/date_picker_height"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:maxDate="12/31/2010"
             android:minDate="01/01/1990"
+            android:calendarViewShown="false"
             app:calenderViewAnimations="@{viewModel.mainPageStates}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +68,7 @@
             android:alpha="0"
             tool:alpha="1"
             app:dateLayoutViewAnimations="@{viewModel.mainPageStates}"
-            app:layout_constraintTop_toBottomOf="@+id/calendar_view"
+            app:layout_constraintTop_toBottomOf="@+id/date_picker"
             android:id="@+id/layout_not_registered_bottom_part"
             >
 

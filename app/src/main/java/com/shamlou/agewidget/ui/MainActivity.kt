@@ -2,7 +2,6 @@ package com.shamlou.agewidget.ui
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
@@ -15,7 +14,6 @@ import com.shamlou.agewidget.base.closeSoftKeyboard
 import com.shamlou.agewidget.base.showSnackBarTop
 import com.shamlou.agewidget.base.updateWidgets
 import com.shamlou.agewidget.databinding.ActivityMainBinding
-import com.shamlou.agewidget.widgets.WidgetExactAge
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_user_not_registererd.*
@@ -50,8 +48,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setCalnderStuff() {
 
-        calendar_view.date = GregorianCalendar(1998, 5, 9).timeInMillis
-        calendar_view.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+        date_picker.updateDate(1998, 5, 9)
+        date_picker.setOnDateChangedListener { datePicker, year, month, dayOfMonth ->
 
             viewModel.setSelectedDateButWeAreNotSure(year, month + 1, dayOfMonth)
         }

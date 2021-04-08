@@ -6,6 +6,7 @@
     <color name="colorRed">#9D0035</color>
     <color name="colorBlue">#2196F3</color>
     <color name="steel">#AEAFB0</color>
+    <color name="white_transparent">#36FFFFFF</color>
     <color name="background_colors">#F4F4F4</color>
     <color name="steel_100">#f5f8fa</color>
     <color name="steel_200">#dee3e7</color>

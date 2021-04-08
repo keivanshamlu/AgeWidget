@@ -8,5 +8,5 @@
     android:resizeMode="horizontal"
     android:widgetCategory="home_screen|keyguard"
     android:configure="com.shamlou.agewidget.ui.MainActivity"
-    android:previewImage="@drawable/ic_old">
+    android:previewImage="@drawable/ic_old_logo">
 </appwidget-provider>

@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setCalnderStuff() {
 
-        date_picker.updateDate(1998, 5, 9)
+        date_picker.updateDate(1998, 6, 9)
         date_picker.setOnDateChangedListener { datePicker, year, month, dayOfMonth ->
 
             viewModel.setSelectedDateButWeAreNotSure(year, month + 1, dayOfMonth)

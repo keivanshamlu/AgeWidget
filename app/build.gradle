@@ -79,10 +79,16 @@ dependencies {
     //emoji
     implementation "androidx.emoji:emoji-appcompat:1.2.0-alpha03"
 
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation rootProject.ext.junit
+    testImplementation rootProject.ext.junitTestExt
+    androidTestImplementation rootProject.ext.androidxTestRunner
+    androidTestImplementation rootProject.ext.androidxTestRules
+    androidTestImplementation rootProject.ext.espressoCore
+    testImplementation rootProject.ext.truthExt
+    testImplementation rootProject.ext.truth
+    testImplementation rootProject.ext.mockK
+    testImplementation rootProject.ext.coreTesting
+    testImplementation rootProject.ext.robolectric
 
 }
 configurations.all

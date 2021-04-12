@@ -27,6 +27,7 @@ ext {
     junitVersion = '4.12'
     junitExtVersion = '1.1.1'
     robolectricVersion = '4.3.1'
+    coroutinesVersion = '1.2.1'
 
     //Testing
     junit = "junit:junit:$junitVersion"
@@ -39,6 +40,7 @@ ext {
     mockK = "io.mockk:mockk:$mockKVersion"
     coreTesting = "androidx.arch.core:core-testing:$coreTestingVersion"
     robolectric = "org.robolectric:robolectric:$robolectricVersion"
+    coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
 }
 
 allprojects {

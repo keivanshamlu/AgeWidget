@@ -39,6 +39,11 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions.unitTests {
+        includeAndroidResources = true
+
+        // ...
+    }
 }
 
 dependencies {
@@ -89,6 +94,7 @@ dependencies {
     testImplementation rootProject.ext.mockK
     testImplementation rootProject.ext.coreTesting
     testImplementation rootProject.ext.robolectric
+    testImplementation rootProject.ext.coroutines
 
 }
 configurations.all

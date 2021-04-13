@@ -99,7 +99,6 @@ class ViewModelMain
 
     private fun checkUserBirthCache(): Job = viewModelScope.launch {
 
-
         _userBirthCache.removeSource(userBirthCacheSource)
         userBirthCacheSource = useCaseCheckUserBirthCache(Unit).asLiveData()
         _userBirthCache.addSource(userBirthCacheSource) { birthSource ->

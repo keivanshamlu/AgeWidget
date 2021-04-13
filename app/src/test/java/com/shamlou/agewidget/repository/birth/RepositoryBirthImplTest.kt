@@ -56,13 +56,12 @@ class RepositoryBirthImplTest {
 
         //when
         every { userDao.getUserBirth() } returns fakeUserBirth
-
-        //then
         val actual = mutableListOf<BirthResource<UserBirthDomain>>()
         result.take(2).collect {
             actual.add(it)
         }
 
+        //then
         verify { userDao.getUserBirth() }
         Assert.assertThat( actual[0].status , equalTo(BirthResource.Status.LOADING))
         Assert.assertThat( actual[1].status , equalTo(BirthResource.Status.REGISTERED))

@@ -1,12 +1,12 @@
 package com.shamlou.agewidget.repository.birth
 
-import android.util.Log
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.db.user.UserDao
 import com.shamlou.agewidget.db.user.toDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.domain.toRemote
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -17,7 +17,6 @@ class RepositoryBirthImpl
         emit(
             BirthResource.loading(null)
         )
-        try {
 
             val response = userDao.getUserBirth()
 
@@ -29,12 +28,9 @@ class RepositoryBirthImpl
                 }
             )
 
-        } catch (exception: Throwable) {
-            Log.d("exception", exception.message ?: "")
-            emit(
-                BirthResource.notRegistered(null)
-            )
-        }
+    }.catch {
+
+        emit(BirthResource.notRegistered(null))
     }
 
     override fun setUserBirth(userBirthDomain: UserBirthDomain) {
@@ -44,7 +40,6 @@ class RepositoryBirthImpl
             userDao.insert(userBirthDomain.toRemote())
 
         } catch (exception: Throwable) {
-            Log.d("exception", exception.message ?: "")
         }
     }
 
@@ -54,7 +49,6 @@ class RepositoryBirthImpl
 
             userDao.deleteRaw()
         } catch (exception: Throwable) {
-            Log.d("exception", exception.message ?: "")
         }
     }
 }

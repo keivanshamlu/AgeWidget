@@ -5,10 +5,13 @@ import com.shamlou.agewidget.MainCoroutineRule
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.db.user.UserBirth
 import com.shamlou.agewidget.db.user.UserDao
+import com.shamlou.agewidget.db.user.toDomain
 import com.shamlou.agewidget.domain.UserBirthDomain
+import com.shamlou.agewidget.domain.toRemote
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
@@ -61,6 +64,7 @@ class RepositoryBirthImplTest {
         Assert.assertThat( actual[0].status , equalTo(BirthResource.Status.LOADING))
         Assert.assertThat( actual[1].status , equalTo(BirthResource.Status.REGISTERED))
         Assert.assertThat( actual[1].data?.firstName , equalTo(fakeUserBirth.firstName))
+        Assert.assertThat( actual[1].data?.userBirthDomain , equalTo(fakeUserBirth.toDomain().userBirthDomain))
     }
     @Test
     @ExperimentalCoroutinesApi
@@ -73,19 +77,32 @@ class RepositoryBirthImplTest {
         every { userDao.getUserBirth() } returns null
 
         //then
-        val actual = mutableListOf<BirthResource.Status>()
+        val actual = mutableListOf<BirthResource<UserBirthDomain>>()
         result.take(2).collect {
-            actual.add(it.status)
+            actual.add(it)
         }
-        Assert.assertThat( actual[0] , equalTo(BirthResource.Status.LOADING))
-        Assert.assertThat( actual[1] , equalTo(BirthResource.Status.NOT_REGISTERED))
+        Assert.assertThat( actual[0].status , equalTo(BirthResource.Status.LOADING))
+        Assert.assertThat( actual[1].status, equalTo(BirthResource.Status.NOT_REGISTERED))
+        Assert.assertNull( actual[1].data)
     }
 
     @Test
     fun setUserBirth() {
+
+        //when
+        repository.setUserBirth(fakeUserBirthDomain)
+
+        //then
+        verify { userDao.insert(fakeUserBirthDomain.toRemote()) }
     }
 
     @Test
     fun deleteUserBirth() {
+
+        //when
+        repository.deleteUserBirth()
+
+        //then
+        verify { userDao.deleteRaw() }
     }
 }

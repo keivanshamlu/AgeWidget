@@ -23,6 +23,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import java.lang.Exception
 
 @RunWith(JUnit4::class)
 class RepositoryBirthImplTest {
@@ -61,6 +62,8 @@ class RepositoryBirthImplTest {
         result.take(2).collect {
             actual.add(it)
         }
+
+        verify { userDao.getUserBirth() }
         Assert.assertThat( actual[0].status , equalTo(BirthResource.Status.LOADING))
         Assert.assertThat( actual[1].status , equalTo(BirthResource.Status.REGISTERED))
         Assert.assertThat( actual[1].data?.firstName , equalTo(fakeUserBirth.firstName))
@@ -68,13 +71,33 @@ class RepositoryBirthImplTest {
     }
     @Test
     @ExperimentalCoroutinesApi
-    fun getUserBirthFailure() = mainCoroutineRule.runBlockingTest {
+    fun getUserBirthReturnNull() = mainCoroutineRule.runBlockingTest {
 
         //given
         val result = repository.getUserBirth()
 
         //when
         every { userDao.getUserBirth() } returns null
+
+        //then
+        val actual = mutableListOf<BirthResource<UserBirthDomain>>()
+        result.take(2).collect {
+            actual.add(it)
+        }
+        Assert.assertThat( actual[0].status , equalTo(BirthResource.Status.LOADING))
+        Assert.assertThat( actual[1].status, equalTo(BirthResource.Status.NOT_REGISTERED))
+        Assert.assertNull( actual[1].data)
+    }
+
+    @Test
+    @ExperimentalCoroutinesApi
+    fun getUserBirthThrowsException() = mainCoroutineRule.runBlockingTest {
+
+        //given
+        val result = repository.getUserBirth()
+
+        //when
+        every { userDao.getUserBirth() } throws Exception()
 
         //then
         val actual = mutableListOf<BirthResource<UserBirthDomain>>()

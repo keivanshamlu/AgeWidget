@@ -95,6 +95,7 @@ dependencies {
     testImplementation rootProject.ext.coreTesting
     testImplementation rootProject.ext.robolectric
     testImplementation rootProject.ext.coroutines
+    testImplementation rootProject.ext.paramterizedTest
 
 }
 configurations.all

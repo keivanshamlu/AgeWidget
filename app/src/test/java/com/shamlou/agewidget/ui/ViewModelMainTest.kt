@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.shamlou.agewidget.MainCoroutineRule
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.base.Event
+import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.getOrAwaitValue
 import com.shamlou.agewidget.manager.TimeManager
 import com.shamlou.agewidget.repository.birth.fakeUserBirthDomain
@@ -25,6 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.junit.runners.Parameterized
 
 @RunWith(JUnit4::class)
 class ViewModelMainTest {
@@ -78,6 +80,8 @@ class ViewModelMainTest {
     @ExperimentalCoroutinesApi
     fun checkUserBirthCacheUserNotRegistered() = mainCoroutineRule.runBlockingTest {
 
+
+        //we stub againg
         every { useCaseCheckUserBirthCache.invoke(Unit) } returns flow {
 
             emit(BirthResource.loading(null))
@@ -95,11 +99,33 @@ class ViewModelMainTest {
     @Test
     fun deleteSelectedDate() {
 
-        //Given
-
         //when
         viewModelMain.deleteSelectedDate()
         //then
         assertThat(viewModelMain.mainPageStates.getOrAwaitValue() , `is`(MainPageStates.DATE_NOT_SELECTED))
+    }
+    @Test
+    fun setAppWidgetId() {
+
+        //given
+        val FakeAppWidgetId = 112233
+        //when
+        viewModelMain.setAppWidgetId(FakeAppWidgetId)
+        //then
+        assertThat(viewModelMain.appWidgetId.getOrAwaitValue() , `is`(FakeAppWidgetId))
+    }
+
+    @Test
+    @Parameters(value = [
+        "mary@testdomain.com, true",
+        "mary.smith@testdomain.com, true",
+        "mary_smith123@testdomain.com, true",
+        "mary@testdomaindotcom, false",
+        "mary-smith@testdomain, false",
+        "testdomain.com, false"
+    ])
+    fun testIsValidEmailId(email: String, expected: Boolean) {
+        val actual = EmailIdUtility.isValid(email)
+        assertEquals(expected, actual)
     }
 }

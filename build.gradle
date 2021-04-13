@@ -28,6 +28,7 @@ ext {
     junitExtVersion = '1.1.1'
     robolectricVersion = '4.3.1'
     coroutinesVersion = '1.2.1'
+    paramterizedTestVersion = '1.1.1'
 
     //Testing
     junit = "junit:junit:$junitVersion"
@@ -41,6 +42,7 @@ ext {
     coreTesting = "androidx.arch.core:core-testing:$coreTestingVersion"
     robolectric = "org.robolectric:robolectric:$robolectricVersion"
     coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    paramterizedTest = "pl.pragmatists:JUnitParams:$paramterizedTestVersion"
 }
 
 allprojects {

@@ -1,12 +1,10 @@
 package com.shamlou.agewidget.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.viewModelScope
 import com.shamlou.agewidget.MainCoroutineRule
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.base.Event
 import com.shamlou.agewidget.domain.BirthDomain
-import com.shamlou.agewidget.domain.UserBirthDomain
 import com.shamlou.agewidget.getOrAwaitValue
 import com.shamlou.agewidget.manager.TimeManager
 import com.shamlou.agewidget.repository.birth.fakeUserBirthDomain
@@ -130,7 +128,7 @@ class ViewModelMainTest {
         viewModelMain.deleteSelectedDate()
         //then
         assertThat(viewModelMain.mainPageStates.getOrAwaitValue() , `is`(MainPageStates.DATE_NOT_SELECTED))
-        assertNull(viewModelMain.mainPageStates.getOrAwaitValue())
+        assertNull(viewModelMain.selectedBirthDate.getOrAwaitValue())
     }
     @Test
     fun howToAddWidgetClicked() {

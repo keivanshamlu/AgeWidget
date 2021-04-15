@@ -10,16 +10,18 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Test
+
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class UseCaseBirthInsertUserBirthCacheTest {
+class UseCaseDeleteUserBirthCacheTest {
 
-    lateinit var useCase : UseCaseBirthInsertUserBirthCache
+    lateinit var useCase : UseCaseDeleteUserBirthCache
 
     @MockK
     lateinit var repository : RepositoryBirth
@@ -35,19 +37,16 @@ class UseCaseBirthInsertUserBirthCacheTest {
     fun setUp(){
 
         MockKAnnotations.init(this)
-        useCase = UseCaseBirthInsertUserBirthCache(repository)
+        useCase = UseCaseDeleteUserBirthCache(repository)
     }
 
     @Test
     operator fun invoke() = mainCoroutineRule.runBlockingTest {
 
-        //given
-        val param = fakeUserBirthDomain
-
-        every { repository.setUserBirth(param) } returns Unit
+        every { repository.deleteUserBirth() } returns Unit
         //when
-        useCase.invoke(param)
+        useCase.invoke(Unit)
         //then
-        verify { repository.setUserBirth(param) }
+        verify { repository.deleteUserBirth() }
     }
 }

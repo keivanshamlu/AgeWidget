@@ -155,4 +155,25 @@ class ViewModelMainTest {
         assertThat(viewModelMain.mainPageStates.getOrAwaitValue() , `is`(MainPageStates.DATE_NOT_SELECTED))
     }
 
+    @Test
+    fun dateConfirmedValidEnteredName(){
+
+        //given
+        viewModelMain.enteredName.value = "qw1"
+        //when
+        viewModelMain.dateConfirmed()
+        //then
+        assertThat(viewModelMain.mainPageStates.getOrAwaitValue() , `is`(MainPageStates.DATE_CONFIRMED))
+    }
+    @Test
+    fun dateConfirmedNotValidEnteredName(){
+
+        //given
+        viewModelMain.enteredName.value = "qw"
+        //when
+        viewModelMain.dateConfirmed()
+        //then
+        assertThat(viewModelMain.mainPageStates.getOrAwaitValue() , `is`(MainPageStates.DATE_CONFIRMED))
+    }
+
 }

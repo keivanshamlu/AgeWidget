@@ -166,8 +166,7 @@ class ViewModelMain
 
     fun dateConfirmed() {
 
-        _mainPageStates.value =
-            if (nameIsValid.value == true) MainPageStates.NAME_VALIDATED else MainPageStates.DATE_CONFIRMED
+        _mainPageStates.value = if (nameIsValid.value == true) MainPageStates.NAME_VALIDATED else MainPageStates.DATE_CONFIRMED
     }
 
     fun letsGoButtonClicked(): Job = viewModelScope.launch {

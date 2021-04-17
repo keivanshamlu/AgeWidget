@@ -1,6 +1,5 @@
 package com.shamlou.agewidget.ui
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.shamlou.agewidget.base.BirthResource
 import com.shamlou.agewidget.base.Event
@@ -134,7 +133,7 @@ class ViewModelMain
             dayOfMonthyear.toString(),
             month.toString(),
             year.toString(),
-            "$year-${(if (month < 10) "0" else "") + month}-${(if (dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}"
+            manager.formatDate(year, month, dayOfMonthyear)
         )
         _mainPageStates.value = MainPageStates.DATE_SELECTED
     }

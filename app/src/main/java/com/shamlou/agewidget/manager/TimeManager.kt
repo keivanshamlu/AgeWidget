@@ -1,5 +1,6 @@
 package com.shamlou.agewidget.manager
 
+import com.shamlou.agewidget.domain.BirthDomain
 import java.time.Period
 
 interface TimeManager {
@@ -12,4 +13,6 @@ interface TimeManager {
     fun calculateNext1Am() : Long
 
     fun isLessThanOneHour(timeAsMilis : Long) : Boolean
+
+    fun formatDate(year: Int, month: Int, dayOfMonthyear: Int):String
 }

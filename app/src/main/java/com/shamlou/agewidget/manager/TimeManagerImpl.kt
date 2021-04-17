@@ -2,6 +2,7 @@ package com.shamlou.agewidget.manager
 
 import android.os.SystemClock
 import android.util.Log
+import com.shamlou.agewidget.domain.BirthDomain
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
@@ -60,5 +61,7 @@ class TimeManagerImpl : TimeManager {
     }
 
     override fun isLessThanOneHour(timeAsMilis: Long): Boolean = timeAsMilis < 60 * 60 * 1000
+
+    override fun formatDate(year: Int, month: Int, dayOfMonthyear: Int):String = "$year-${(if (month < 10) "0" else "") + month}-${(if (dayOfMonthyear < 10) "0" else "") + dayOfMonthyear}"
 
 }

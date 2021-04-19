@@ -39,9 +39,6 @@ class ViewModelMain
     private val _resultOk = MutableLiveData<Event<Int>>()
     val resultOk: LiveData<Event<Int>> = _resultOk
 
-    private val _resultCancel = MutableLiveData<Event<Boolean>>()
-    val resultCancel: LiveData<Event<Boolean>> = _resultCancel
-
     private val _registeredUser = MutableLiveData<UserBirthDomain?>()
     val registeredUser: LiveData<UserBirthDomain?> = _registeredUser
 
